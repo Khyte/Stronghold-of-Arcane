@@ -10,14 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 8c490dcc789ce3a46bea79d76ea8f268, type: 3}
-  m_Name: 1.1
+  m_Name: 1.8
   m_EditorClassIdentifier: 
-  levelId: 1.1
-  map: {fileID: 5251742871535109417, guid: a76e2e2e525e414488f0ff1edc55096a, type: 3}
-  navMesh: {fileID: 23800000, guid: 46b6a9acdce5a2447be33212a083f63f, type: 2}
-  waves:
-  - ennemiesType:
-    - data: {fileID: 11400000, guid: d5b7acb1e97b4144f90af08fa875483b, type: 2}
-      nbrToSpawn: 5
-  spawn: {x: 0, y: 0, z: 16}
-  end: {x: 0, y: 0, z: -16}
+  levelId: 
+  map: {fileID: 0}
+  navMesh: {fileID: 0}
+  waves: []
+  spawn: {x: 0, y: 0, z: 0}
+  end: {x: 0, y: 0, z: 0}

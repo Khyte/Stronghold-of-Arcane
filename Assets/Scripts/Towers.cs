@@ -133,7 +133,7 @@ public class Towers : MonoBehaviour
 				availableTargets.RemoveAt(i);
 			else
 			{
-				float distanceToEnd = Vector3.Distance(availableTargets[i].transform.position, GameplayController.Instance.endPosition.position);
+				float distanceToEnd = Vector3.Distance(availableTargets[i].transform.position, GameController.Instance.end.position);
 
 				if (distance > distanceToEnd)
 				{

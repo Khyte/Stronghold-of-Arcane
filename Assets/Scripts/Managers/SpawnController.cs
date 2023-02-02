@@ -4,11 +4,6 @@ using UnityEngine;
 
 public class SpawnController : MonoBehaviour
 {
-	[SerializeField]
-	private Transform baseTarget;
-	[SerializeField]
-	private Transform spawn;
-
 	private List<Wave> waves;
 	private Wave actualWave;
 
@@ -24,13 +19,13 @@ public class SpawnController : MonoBehaviour
 
 	public void SpawnEnnemies()
 	{
-		waves = GameplayController.Instance.waves;
+		waves = GameController.Instance.waves;
 
 		for (int i = 0 ; i < waves[0].ennemiesType.Count ; i++)
 		{
 			for (int j = 0 ; j < waves[0].ennemiesType[i].nbrToSpawn ; j++)
 			{
-				GameObject ennemy = Instantiate(waves[0].ennemiesType[i].data.prefab, spawn.transform.position, Quaternion.identity, null);
+				GameObject ennemy = Instantiate(waves[0].ennemiesType[i].data.prefab, GameController.Instance.spawn.position, Quaternion.identity, null);
 
 				Ennemies ennemyComp = ennemy.GetComponent<Ennemies>();
 				InitializeEnnemy(ennemyComp, waves[0].ennemiesType[i].data);
@@ -43,13 +38,13 @@ public class SpawnController : MonoBehaviour
 
 	public void StartNewWave()
 	{
-		if (GameplayController.Instance.actualWaveIndex >= waves.Count)
+		if (GameController.Instance.actualWaveIndex >= waves.Count)
 			return;
 
-		actualWave = waves[GameplayController.Instance.actualWaveIndex];
+		actualWave = waves[GameController.Instance.actualWaveIndex];
 		waveEnnemies = new List<EnnemiesData>();
 
-		GameplayController.Instance.isEndOfWave = false;
+		GameController.Instance.isEndOfWave = false;
 
 		for (int i = 0 ; i < actualWave.ennemiesType.Count ; i++)
 		{
@@ -64,7 +59,7 @@ public class SpawnController : MonoBehaviour
 
 	private void LaunchWave()
 	{
-		GameplayController.Instance.isWaveActive = true;
+		GameController.Instance.isWaveActive = true;
 
 		int choice = Random.Range(0, waveEnnemies.Count - 1);
 
@@ -89,10 +84,10 @@ public class SpawnController : MonoBehaviour
 		InitializeEnnemy(ennemy, waveEnnemies[choice]);
 
 		float randomPos = Random.Range(-1f, 1f);
-		ennemy.transform.position = spawn.position + spawn.transform.right * randomPos;
-		ennemy.transform.rotation = spawn.rotation;
+		ennemy.transform.position = GameController.Instance.spawn.position + GameController.Instance.spawn.transform.right * randomPos;
+		ennemy.transform.LookAt(GameController.Instance.end.position);
 		ennemy.gameObject.SetActive(true);
-		ennemy.SetTarget(GameplayController.Instance.endPosition.position + GameplayController.Instance.endPosition.right * (-randomPos));
+		ennemy.SetTarget(GameController.Instance.end.position + GameController.Instance.end.right * (-randomPos));
 		ennemy.agent.speed = ennemy.data.speed;
 
 		waveEnnemies.RemoveAt(choice);
@@ -101,12 +96,12 @@ public class SpawnController : MonoBehaviour
 			Invoke(nameof(LaunchWave), Random.Range(1.5f, 3f));
 		else
 		{
-			GameplayController.Instance.isEndOfWave = true;
+			GameController.Instance.isEndOfWave = true;
 
 			// //
 
-			GameplayController.Instance.isWaveActive = false;
-			GameplayController.Instance.actualWaveIndex++;
+			GameController.Instance.isWaveActive = false;
+			GameController.Instance.actualWaveIndex++;
 
 			// //
 		}

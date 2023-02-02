@@ -2,16 +2,20 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
-public class GameplayController : MonoBehaviour
+public class GameController : MonoBehaviour
 {
-	public static GameplayController Instance;
+	public static GameController Instance;
+
+	public LevelsData actualLevel;
 
 	public SpawnController spawnController;
 
 	public List<Wave> waves = new List<Wave>();
 
-	public Transform endPosition;
+	public Transform spawn;
+	public Transform end;
 
 	public int healthPoint = 5;
 	public int actualWaveIndex = 0;
@@ -19,6 +23,8 @@ public class GameplayController : MonoBehaviour
 	public bool isDefeat;
 	public bool isWaveActive;
 	public bool isEndOfWave;
+
+	private NavMeshDataInstance dataInstance;
 
 	private void Awake()
 	{
@@ -35,6 +41,7 @@ public class GameplayController : MonoBehaviour
 
 	private void Start()
 	{
+		CreateWorld();
 		spawnController.SpawnEnnemies();
 	}
 
@@ -44,6 +51,16 @@ public class GameplayController : MonoBehaviour
 		{
 			spawnController.StartNewWave();
 		}
+	}
+
+	private void CreateWorld()
+	{
+		GameObject world = Instantiate(actualLevel.map);
+		spawn.position = actualLevel.spawn;
+		end.position = actualLevel.end;
+		waves = actualLevel.waves;
+
+		dataInstance = NavMesh.AddNavMeshData(actualLevel.navMesh);
 	}
 
 	public void TakeDamage()

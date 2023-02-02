@@ -28,7 +28,7 @@ public class Ennemies : MonoBehaviour
 	{
 		if (other.tag == "End")
 		{
-			GameplayController.Instance.TakeDamage();
+			GameController.Instance.TakeDamage();
 			gameObject.SetActive(false);
 		}
 
