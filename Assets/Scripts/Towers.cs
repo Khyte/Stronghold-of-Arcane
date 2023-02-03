@@ -125,7 +125,7 @@ public class Towers : MonoBehaviour
 			return null;
 
 		Ennemies potentialTarget = null;
-		float distance = Mathf.Infinity;
+		float distanceToEnd = Mathf.Infinity;
 
 		for (int i = availableTargets.Count - 1 ; i >= 0 ; i--)
 		{
@@ -133,12 +133,15 @@ public class Towers : MonoBehaviour
 				availableTargets.RemoveAt(i);
 			else
 			{
-				float distanceToEnd = Vector3.Distance(availableTargets[i].transform.position, GameController.Instance.end.position);
-
-				if (distance > distanceToEnd)
+				for (int j = 0 ; j < GameController.Instance.ends.Count ; j++)
 				{
-					distance = distanceToEnd;
-					potentialTarget = availableTargets[i];
+					float distance = Vector3.Distance(availableTargets[i].transform.position, GameController.Instance.ends[j].position);
+
+					if (distanceToEnd > distance)
+					{
+						distanceToEnd = distance;
+						potentialTarget = availableTargets[i];
+					}
 				}
 			}
 		}

@@ -10,6 +10,6 @@ public class LevelsData : ScriptableObject
 	public GameObject map;
 	public NavMeshData navMesh;
 	public List<Wave> waves;
-	public Vector3 spawn;
-	public Vector3 end;
+	public List<Vector3> spawn;
+	public List<Vector3> end;
 }

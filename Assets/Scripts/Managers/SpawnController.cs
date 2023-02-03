@@ -25,7 +25,7 @@ public class SpawnController : MonoBehaviour
 		{
 			for (int j = 0 ; j < waves[0].ennemiesType[i].nbrToSpawn ; j++)
 			{
-				GameObject ennemy = Instantiate(waves[0].ennemiesType[i].data.prefab, GameController.Instance.spawn.position, Quaternion.identity, null);
+				GameObject ennemy = Instantiate(waves[0].ennemiesType[i].data.prefab, Vector3.zero, Quaternion.identity, null);
 
 				Ennemies ennemyComp = ennemy.GetComponent<Ennemies>();
 				InitializeEnnemy(ennemyComp, waves[0].ennemiesType[i].data);
@@ -83,11 +83,14 @@ public class SpawnController : MonoBehaviour
 
 		InitializeEnnemy(ennemy, waveEnnemies[choice]);
 
+		int selectSpawn = Random.Range(0, GameController.Instance.spawns.Count);
+		int selectEnd = Random.Range(0, GameController.Instance.ends.Count);
 		float randomPos = Random.Range(-1f, 1f);
-		ennemy.transform.position = GameController.Instance.spawn.position + GameController.Instance.spawn.transform.right * randomPos;
-		ennemy.transform.LookAt(GameController.Instance.end.position);
+
+		ennemy.transform.position = GameController.Instance.spawns[selectSpawn].position + GameController.Instance.spawns[selectSpawn].transform.right * randomPos;
+		ennemy.transform.LookAt(GameController.Instance.ends[selectEnd].position);
 		ennemy.gameObject.SetActive(true);
-		ennemy.SetTarget(GameController.Instance.end.position + GameController.Instance.end.right * (-randomPos));
+		ennemy.SetTarget(GameController.Instance.ends[selectEnd].position + GameController.Instance.ends[selectEnd].right * (-randomPos));
 		ennemy.agent.speed = ennemy.data.speed;
 
 		waveEnnemies.RemoveAt(choice);

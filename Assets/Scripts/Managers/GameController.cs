@@ -14,8 +14,11 @@ public class GameController : MonoBehaviour
 
 	public List<Wave> waves = new List<Wave>();
 
-	public Transform spawn;
-	public Transform end;
+	public GameObject spawnPrefab;
+	public GameObject endPrefab;
+
+	public List<Transform> spawns;
+	public List<Transform> ends;
 
 	public int healthPoint = 5;
 	public int actualWaveIndex = 0;
@@ -56,10 +59,24 @@ public class GameController : MonoBehaviour
 	private void CreateWorld()
 	{
 		GameObject world = Instantiate(actualLevel.map);
-		spawn.position = actualLevel.spawn;
-		end.position = actualLevel.end;
-		waves = actualLevel.waves;
+		spawns.Clear();
+		ends.Clear();
 
+		for (int i = 0 ; i < actualLevel.spawn.Count ; i++)
+		{
+			GameObject spawn = Instantiate(spawnPrefab);
+			spawn.transform.position = actualLevel.spawn[i];
+			spawns.Add(spawn.transform);
+		}
+
+		for (int i = 0 ; i < actualLevel.end.Count ; i++)
+		{
+			GameObject end = Instantiate(endPrefab);
+			end.transform.position = actualLevel.end[i];
+			ends.Add(end.transform);
+		}
+
+		waves = actualLevel.waves;
 		dataInstance = NavMesh.AddNavMeshData(actualLevel.navMesh);
 	}
 
