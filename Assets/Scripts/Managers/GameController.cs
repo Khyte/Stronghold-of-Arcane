@@ -8,8 +8,6 @@ public class GameController : MonoBehaviour
 {
 	public static GameController Instance;
 
-	public LevelsData actualLevel;
-
 	public SpawnController spawnController;
 
 	public List<Wave> waves = new List<Wave>();
@@ -27,6 +25,12 @@ public class GameController : MonoBehaviour
 	public bool isWaveActive;
 	public bool isEndOfWave;
 
+	[SerializeField]
+	private AudioClip introMusic;
+	[SerializeField]
+	private List<AudioClip> battleMusics;
+
+	private LevelsData actualLevel;
 	private NavMeshDataInstance dataInstance;
 
 	private void Awake()
@@ -38,12 +42,12 @@ public class GameController : MonoBehaviour
 		}
 		else
 			Instance = this;
-
-		DontDestroyOnLoad(gameObject);
 	}
 
 	private void Start()
 	{
+		StartMusic();
+
 		CreateWorld();
 		spawnController.SpawnEnnemies();
 	}
@@ -56,8 +60,24 @@ public class GameController : MonoBehaviour
 		}
 	}
 
+	private void StartMusic()
+	{
+		GameManager.Instance.musics.Add(introMusic);
+		GameManager.Instance.OnMusicEnded += PlayBattleMusic;
+		GameManager.Instance.PlayMusic(true);
+	}
+
+	private void PlayBattleMusic()
+	{
+		GameManager.Instance.OnMusicEnded -= PlayBattleMusic;
+		GameManager.Instance.musics = battleMusics;
+		GameManager.Instance.PlayMusic();
+	}
+
 	private void CreateWorld()
 	{
+		actualLevel = DataManager.Instance.actualLevel;
+
 		GameObject world = Instantiate(actualLevel.map);
 		spawns.Clear();
 		ends.Clear();

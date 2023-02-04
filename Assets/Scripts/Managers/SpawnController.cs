@@ -12,8 +12,8 @@ public class SpawnController : MonoBehaviour
 
 	private void InitializeEnnemy(Ennemies ennemy, EnnemiesData data)
 	{
-		ennemy.name = data.name;
 		ennemy.data = data;
+		ennemy.name = data.name;
 		ennemy.InitializeEnnemy();
 	}
 
@@ -78,6 +78,7 @@ public class SpawnController : MonoBehaviour
 		{
 			GameObject newEnnemy = Instantiate(waveEnnemies[choice].prefab);
 			ennemy = newEnnemy.GetComponent<Ennemies>();
+			ennemy.gameObject.SetActive(false);
 			ennemiesPool.Add(ennemy);
 		}
 
@@ -96,7 +97,7 @@ public class SpawnController : MonoBehaviour
 		waveEnnemies.RemoveAt(choice);
 
 		if (waveEnnemies.Count > 0)
-			Invoke(nameof(LaunchWave), Random.Range(1.5f, 3f));
+			Invoke(nameof(LaunchWave), Random.Range(2f, 3.5f));
 		else
 		{
 			GameController.Instance.isEndOfWave = true;

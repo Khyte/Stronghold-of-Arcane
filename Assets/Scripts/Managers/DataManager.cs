@@ -6,19 +6,15 @@ using UnityEngine;
 public class Data
 {
 	public int savedWorlds;
-	public Options savedOptions;
-}
-
-public class Options
-{
-	public float volume;
+	public float volume = 1f;
 }
 
 public class DataManager : MonoBehaviour
 {
 	public static DataManager Instance;
 
-	public int actualLevel;
+	public List<LevelsData> allLevels;
+	public LevelsData actualLevel;
 
 	public Data Data;
 
@@ -32,7 +28,6 @@ public class DataManager : MonoBehaviour
 		else
 			Instance = this;
 
-		DontDestroyOnLoad(gameObject);
 		FirstLoad();
 	}
 
@@ -61,25 +56,16 @@ public class DataManager : MonoBehaviour
 	private void FirstLoad()
 	{
 		LoadAndSaveData.LoadFirstTime();
-
-		if (Data.savedOptions == null)
-		{
-			Data.savedOptions = new Options();
-			Data.savedOptions.volume = 1f;
-		}
-
-		AudioListener.volume = Data.savedOptions.volume;
+		AudioListener.volume = Data.volume;
 	}
 
 	public void SaveData(int world = -1, float volume = -1)
 	{
-		Debug.LogWarning(world);
-
 		if (world != -1)
 			Data.savedWorlds = world;
 
-		if (volume != -1)
-			Data.savedOptions.volume = volume;
+		if (volume >= 0 && volume <= 1)
+			Data.volume = volume;
 
 		LoadAndSaveData.SaveData();
 	}

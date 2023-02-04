@@ -33,5 +33,7 @@ MonoBehaviour:
       nbrToSpawn: 4
     - data: {fileID: 11400000, guid: 3f416a9948899f34093026925af4069e, type: 2}
       nbrToSpawn: 4
-  spawn: {x: 12, y: 0, z: 16}
-  end: {x: 0, y: 0, z: 4}
+  spawn:
+  - {x: 12, y: 0, z: 16}
+  end:
+  - {x: 0, y: 0, z: 4}

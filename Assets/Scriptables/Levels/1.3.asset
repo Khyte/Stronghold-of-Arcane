@@ -29,5 +29,7 @@ MonoBehaviour:
       nbrToSpawn: 12
     - data: {fileID: 11400000, guid: 88f7d33a65a68df4a9a2515e789b42e5, type: 2}
       nbrToSpawn: 4
-  spawn: {x: 0, y: 0, z: 20}
-  end: {x: 0, y: 0, z: -20}
+  spawn:
+  - {x: 0, y: 0, z: 20}
+  end:
+  - {x: 0, y: 0, z: -20}

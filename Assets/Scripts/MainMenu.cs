@@ -17,6 +17,12 @@ public class MainMenu : MonoBehaviour
 	[SerializeField]
 	private List<Button> btnLevelPrefabs;
 
+	[SerializeField]
+	private List<AudioClip> menuMusics;
+
+	[SerializeField]
+	private Slider volumeSlider;
+
 	private void Awake()
 	{
 		btnsParent.gameObject.SetActive(true);
@@ -26,13 +32,14 @@ public class MainMenu : MonoBehaviour
 
 	private void Start()
 	{
+		GameManager.Instance.musics = menuMusics;
+		GameManager.Instance.PlayMusic();
 		CreateUnlockedLevel();
+		InitializeOptions();
 	}
 
 	private void CreateUnlockedLevel()
 	{
-		Debug.LogWarning(DataManager.Instance.Data.savedWorlds);
-
 		for (int i = 0 ; i < DataManager.Instance.Data.savedWorlds + 1 ; i++)
 		{
 			Button button;
@@ -82,9 +89,22 @@ public class MainMenu : MonoBehaviour
 		}
 	}
 
-	private void LoadBattleScene(int actualLevel)
+	private void InitializeOptions()
 	{
-		DataManager.Instance.actualLevel = actualLevel;
+		volumeSlider.value = DataManager.Instance.Data.volume;
+	}
+
+	public void ChangeVolume(float value)
+	{
+		AudioListener.volume = value;
+		DataManager.Instance.Data.volume = value;
+		DataManager.Instance.SaveData(-1, value);
+	}
+
+	private void LoadBattleScene(int levelIndex)
+	{
+		GameManager.Instance.StopMusic();
+		DataManager.Instance.actualLevel = DataManager.Instance.allLevels[levelIndex];
 		SceneManager.LoadScene("BattleScene");
 	}
 }
