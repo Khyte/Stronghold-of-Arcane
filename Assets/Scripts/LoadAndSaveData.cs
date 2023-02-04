@@ -5,31 +5,21 @@ using System.IO;
 using System.Text;
 using UnityEngine;
 
-public class LoadAndSaveData : MonoBehaviour
+public static class LoadAndSaveData
 {
-	public static LoadAndSaveData Instance;
+	private static string path;
 
-	private string path;
-
-	private void Awake()
+	public static void LoadFirstTime()
 	{
-		if (Instance != null && Instance != this)
-		{
-			Destroy(gameObject);
-			return;
-		}
-		else
-			Instance = this;
-
-		DontDestroyOnLoad(gameObject);
-
 		path = Application.persistentDataPath;
 
 		if (!File.Exists($"{path}/Save.json"))
 			File.Create($"{path}/Save.json");
+
+		LoadData();
 	}
 
-	public void SaveData()
+	public static void SaveData()
 	{
 		string saveJSON = JsonUtility.ToJson(DataManager.Instance.Data);
 
@@ -37,7 +27,7 @@ public class LoadAndSaveData : MonoBehaviour
 			File.WriteAllText($"{path}/Save.json", Convert.ToBase64String(Encoding.UTF8.GetBytes(saveJSON)));
 	}
 
-	public void LoadData()
+	public static void LoadData()
 	{
 		if (File.Exists($"{path}/Save.json"))
 		{

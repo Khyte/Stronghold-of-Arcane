@@ -12,9 +12,38 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8c490dcc789ce3a46bea79d76ea8f268, type: 3}
   m_Name: 1.8
   m_EditorClassIdentifier: 
-  levelId: 
-  map: {fileID: 0}
-  navMesh: {fileID: 0}
-  waves: []
-  spawn: {x: 0, y: 0, z: 0}
-  end: {x: 0, y: 0, z: 0}
+  levelId: 1.8
+  map: {fileID: 7399650661821006350, guid: 24d7b85907b8b484388dfac4fd021e2d, type: 3}
+  navMesh: {fileID: 23800000, guid: c3a397a61f81e6040b53c8c3a5adff38, type: 2}
+  waves:
+  - ennemiesType:
+    - data: {fileID: 11400000, guid: d5b7acb1e97b4144f90af08fa875483b, type: 2}
+      nbrToSpawn: 20
+    - data: {fileID: 11400000, guid: 88f7d33a65a68df4a9a2515e789b42e5, type: 2}
+      nbrToSpawn: 15
+    - data: {fileID: 11400000, guid: 3f416a9948899f34093026925af4069e, type: 2}
+      nbrToSpawn: 10
+    - data: {fileID: 11400000, guid: 0c0e28fa7b2b13a48b3a61af8aae1a21, type: 2}
+      nbrToSpawn: 8
+    - data: {fileID: 11400000, guid: bfd2336e4349fcd42b86d5e03fc010f4, type: 2}
+      nbrToSpawn: 8
+  - ennemiesType:
+    - data: {fileID: 11400000, guid: 3f416a9948899f34093026925af4069e, type: 2}
+      nbrToSpawn: 30
+  - ennemiesType:
+    - data: {fileID: 11400000, guid: 0c0e28fa7b2b13a48b3a61af8aae1a21, type: 2}
+      nbrToSpawn: 30
+  - ennemiesType:
+    - data: {fileID: 11400000, guid: bfd2336e4349fcd42b86d5e03fc010f4, type: 2}
+      nbrToSpawn: 30
+  - ennemiesType:
+    - data: {fileID: 11400000, guid: d5b7acb1e97b4144f90af08fa875483b, type: 2}
+      nbrToSpawn: 60
+    - data: {fileID: 11400000, guid: ff2665953a4281c46a317f1a2be4e3dc, type: 2}
+      nbrToSpawn: 1
+  spawn:
+  - {x: 0, y: 0, z: 24}
+  - {x: 24, y: 0, z: 0}
+  - {x: -24, y: 0, z: 0}
+  end:
+  - {x: 0, y: 0, z: -24}
