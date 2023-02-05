@@ -39,7 +39,10 @@ public class Ennemies : MonoBehaviour
 				actualHP -= damage;
 
 				if (actualHP <= 0)
+				{
 					gameObject.SetActive(false);
+					GameController.Instance.GetOrLoseMoney(data.moneyDrop);
+				}
 
 				other.GetComponent<Collider>().enabled = false;
 			}

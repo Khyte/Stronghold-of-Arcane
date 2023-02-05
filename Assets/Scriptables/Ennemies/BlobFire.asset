@@ -20,3 +20,4 @@ MonoBehaviour:
   maxHP: 18
   actualHP: 18
   speed: 1
+  moneyDrop: 10

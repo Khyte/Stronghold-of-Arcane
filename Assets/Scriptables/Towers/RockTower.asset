@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 609f4a40fba22864a99bedf8ce0ce2f6, type: 3}
+  m_Name: RockTower
+  m_EditorClassIdentifier: 
+  id: 0
+  towerName: RockTower
+  prefab: {fileID: 1648433462891332468, guid: 8f1109ccb7c4747428c44c0faff8dcfd, type: 3}
+  baseAttack: 5
+  attackModifier: 2
+  attackSpeed: 3
+  range: 6
+  cost: 10
+  costPerUpgrade: 5
+  forceOfProjectile: 300
+  timeDisableProjectile: 3
+  isDotTower: 0

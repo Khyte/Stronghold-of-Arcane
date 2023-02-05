@@ -14,6 +14,9 @@ public class TowersData : ScriptableObject
 	public float attackSpeed;
 	public float range;
 
+	public int cost;
+	public int costPerUpgrade;
+
 	public float forceOfProjectile;
 	public float timeDisableProjectile;
 

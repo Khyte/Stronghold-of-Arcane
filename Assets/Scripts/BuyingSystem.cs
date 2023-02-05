@@ -86,9 +86,14 @@ public class BuyingSystem : MonoBehaviour
 		}
 	}
 
-	public void BuyTower(GameObject towerPrefab)
+	public void BuyTower(TowersData tower)
 	{
-		Instantiate(towerPrefab, selectedArcane.transform.position, Quaternion.identity, selectedArcane.transform);
+		if (tower.cost > GameController.Instance.money)
+			return;
+
+		GameController.Instance.GetOrLoseMoney(-tower.cost);
+
+		Instantiate(tower.prefab, selectedArcane.transform.position - selectedArcane.transform.up * 0.5f, Quaternion.identity, selectedArcane.transform);
 		selectedArcane.GetComponent<Collider>().enabled = false;
 		shopMenu.SetActive(false);
 	}
@@ -96,9 +101,15 @@ public class BuyingSystem : MonoBehaviour
 	public void UpgradeTower(int upgrade)
 	{
 		Towers tower = selectedTower.GetComponent<Towers>();
+
+		if (tower.data.costPerUpgrade > GameController.Instance.money)
+			return;
+
+		GameController.Instance.GetOrLoseMoney(-tower.data.costPerUpgrade);
+
 		tower.actualDamage = tower.data.baseAttack + (tower.data.attackModifier * upgrade);
 		tower.actualUpgrade = upgrade;
 		upgradeMenu.SetActive(false);
-		tower.range.gameObject.SetActive(true);
+		tower.range.gameObject.SetActive(false);
 	}
 }

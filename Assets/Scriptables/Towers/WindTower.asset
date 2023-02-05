@@ -10,15 +10,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 609f4a40fba22864a99bedf8ce0ce2f6, type: 3}
-  m_Name: FireTower
+  m_Name: WindTower
   m_EditorClassIdentifier: 
-  id: 1
-  towerName: FireTower
-  prefab: {fileID: 453696109908987505, guid: 539ee10a51d7c4e4f9e6f1b10c4374d5, type: 3}
-  baseAttack: 0.5
-  attackModifier: 0.3
-  attackSpeed: 0.4
-  range: 5
-  forceOfProjectile: 600
-  timeDisableProjectile: 1
+  id: 4
+  towerName: WindTower
+  prefab: {fileID: 8753667432966857127, guid: d92d592b29c4813428b9c42740936599, type: 3}
+  baseAttack: 4
+  attackModifier: 2
+  attackSpeed: 2
+  range: 800
+  cost: 25
+  costPerUpgrade: 12
+  forceOfProjectile: 200
+  timeDisableProjectile: 2
   isDotTower: 0

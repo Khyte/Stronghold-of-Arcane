@@ -10,15 +10,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 609f4a40fba22864a99bedf8ce0ce2f6, type: 3}
-  m_Name: RockTower
+  m_Name: FireTower
   m_EditorClassIdentifier: 
-  id: 0
-  towerName: RockTower
-  prefab: {fileID: 1648433462891332468, guid: 8f1109ccb7c4747428c44c0faff8dcfd, type: 3}
-  baseAttack: 5
-  attackModifier: 2
-  attackSpeed: 3
-  range: 6
-  forceOfProjectile: 300
-  timeDisableProjectile: 3
+  id: 1
+  towerName: FireTower
+  prefab: {fileID: 453696109908987505, guid: 539ee10a51d7c4e4f9e6f1b10c4374d5, type: 3}
+  baseAttack: 0.5
+  attackModifier: 0.3
+  attackSpeed: 0.4
+  range: 5
+  cost: 12
+  costPerUpgrade: 6
+  forceOfProjectile: 600
+  timeDisableProjectile: 1
   isDotTower: 0

@@ -8,7 +8,10 @@ public class SpawnController : MonoBehaviour
 	private Wave actualWave;
 
 	private List<EnnemiesData> waveEnnemies;
-	public List<Ennemies> ennemiesPool = new List<Ennemies>();
+	private List<Ennemies> ennemiesPool = new List<Ennemies>();
+
+	private int actualEnnemyIndex;
+	private int maxEnnemies;
 
 	private void InitializeEnnemy(Ennemies ennemy, EnnemiesData data)
 	{
@@ -54,6 +57,11 @@ public class SpawnController : MonoBehaviour
 			}
 		}
 
+		GameController.Instance.ActualWaveDisplay(GameController.Instance.actualWaveIndex + 1);
+
+		actualEnnemyIndex = 0;
+		maxEnnemies = waveEnnemies.Count;
+
 		LaunchWave();
 	}
 
@@ -95,6 +103,9 @@ public class SpawnController : MonoBehaviour
 		ennemy.agent.speed = ennemy.data.speed;
 
 		waveEnnemies.RemoveAt(choice);
+
+		actualEnnemyIndex++;
+		GameController.Instance.WaveCompletion(actualEnnemyIndex, maxEnnemies);
 
 		if (waveEnnemies.Count > 0)
 			Invoke(nameof(LaunchWave), Random.Range(2f, 3.5f));

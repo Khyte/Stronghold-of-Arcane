@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 609f4a40fba22864a99bedf8ce0ce2f6, type: 3}
+  m_Name: WaterTower
+  m_EditorClassIdentifier: 
+  id: 3
+  towerName: WaterTower
+  prefab: {fileID: 8531208638965427925, guid: 462e2cb5b05317948b90a38d07958755, type: 3}
+  baseAttack: 2
+  attackModifier: 1
+  attackSpeed: 1
+  range: 5
+  cost: 20
+  costPerUpgrade: 10
+  forceOfProjectile: 200
+  timeDisableProjectile: 1
+  isDotTower: 0

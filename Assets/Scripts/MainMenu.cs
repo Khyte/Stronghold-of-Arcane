@@ -15,7 +15,9 @@ public class MainMenu : MonoBehaviour
 	private Transform optionsParent;
 
 	[SerializeField]
-	private List<Button> btnLevelPrefabs;
+	private List<Button> btnLevels;
+	[SerializeField]
+	private List<GameObject> lockLevels;
 
 	[SerializeField]
 	private List<AudioClip> menuMusics;
@@ -34,13 +36,32 @@ public class MainMenu : MonoBehaviour
 	{
 		GameManager.Instance.musics = menuMusics;
 		GameManager.Instance.PlayMusic();
-		CreateUnlockedLevel();
+		UnlockedLevel();
 		InitializeOptions();
 	}
 
-	private void CreateUnlockedLevel()
+	private void UnlockedLevel()
 	{
-		for (int i = 0 ; i < DataManager.Instance.Data.savedWorlds + 1 ; i++)
+		for (int i = 0 ; i < btnLevels.Count ; i++)
+		{
+			if (i < DataManager.Instance.Data.savedWorlds + 1)
+			{
+				lockLevels[i].SetActive(false);
+
+				int levelIndex = i;
+				btnLevels[i].onClick.AddListener(delegate
+				{
+					LoadBattleScene(levelIndex);
+				});
+			}
+			else
+			{
+				lockLevels[i].SetActive(true);
+				btnLevels[i].onClick.RemoveAllListeners();
+			}
+		}
+
+		/*for (int i = 0 ; i < DataManager.Instance.Data.savedWorlds + 1 ; i++)
 		{
 			Button button;
 
@@ -86,7 +107,7 @@ public class MainMenu : MonoBehaviour
 			{
 				LoadBattleScene(levelIndex);
 			});
-		}
+		}*/
 	}
 
 	private void InitializeOptions()

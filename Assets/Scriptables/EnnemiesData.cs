@@ -14,4 +14,6 @@ public class EnnemiesData : ScriptableObject
 	public float maxHP;
 	public float actualHP;
 	public float speed;
+
+	public int moneyDrop;
 }

@@ -1,8 +1,10 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.UI;
 
 public class GameController : MonoBehaviour
 {
@@ -18,12 +20,23 @@ public class GameController : MonoBehaviour
 	public List<Transform> spawns;
 	public List<Transform> ends;
 
-	public int healthPoint = 5;
+	public int life = 5;
+	public int money = 30;
 	public int actualWaveIndex = 0;
 
 	public bool isDefeat;
 	public bool isWaveActive;
 	public bool isEndOfWave;
+
+	[SerializeField]
+	private TextMeshProUGUI lifeText;
+	[SerializeField]
+	private TextMeshProUGUI moneyText;
+
+	[SerializeField]
+	private TextMeshProUGUI waveText;
+	[SerializeField]
+	private Image waveCompletion;
 
 	[SerializeField]
 	private AudioClip introMusic;
@@ -47,8 +60,9 @@ public class GameController : MonoBehaviour
 	private void Start()
 	{
 		StartMusic();
-
 		CreateWorld();
+		InitUI();
+
 		spawnController.SpawnEnnemies();
 	}
 
@@ -58,6 +72,14 @@ public class GameController : MonoBehaviour
 		{
 			spawnController.StartNewWave();
 		}
+	}
+
+	private void InitUI()
+	{
+		lifeText.text = life.ToString();
+		moneyText.text = money.ToString();
+		waveText.text = "";
+		waveCompletion.fillAmount = 0;
 	}
 
 	private void StartMusic()
@@ -105,10 +127,27 @@ public class GameController : MonoBehaviour
 		if (isDefeat)
 			return;
 
-		healthPoint--;
+		life--;
+		lifeText.text = life.ToString();
 
-		if (healthPoint <= 0)
+		if (life <= 0)
 			isDefeat = true;
+	}
+
+	public void GetOrLoseMoney(int value)
+	{
+		money += value;
+		moneyText.text = money.ToString();
+	}
+
+	public void WaveCompletion(int value, int fromMax)
+	{
+		waveCompletion.fillAmount = DataManager.Instance.Remap(value, 0, fromMax, 0, 1);
+	}
+
+	public void ActualWaveDisplay(int waveIndex)
+	{
+		waveText.text = $"Vague {waveIndex}/{waves.Count}";
 	}
 }
 

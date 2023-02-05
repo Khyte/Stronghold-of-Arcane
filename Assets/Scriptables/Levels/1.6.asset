@@ -18,28 +18,28 @@ MonoBehaviour:
   waves:
   - ennemiesType:
     - data: {fileID: 11400000, guid: d5b7acb1e97b4144f90af08fa875483b, type: 2}
-      nbrToSpawn: 26
+      nbrToSpawn: 30
   - ennemiesType:
     - data: {fileID: 11400000, guid: d5b7acb1e97b4144f90af08fa875483b, type: 2}
-      nbrToSpawn: 16
+      nbrToSpawn: 20
     - data: {fileID: 11400000, guid: 88f7d33a65a68df4a9a2515e789b42e5, type: 2}
       nbrToSpawn: 10
+    - data: {fileID: 11400000, guid: 3f416a9948899f34093026925af4069e, type: 2}
+      nbrToSpawn: 10
+  - ennemiesType:
+    - data: {fileID: 11400000, guid: d5b7acb1e97b4144f90af08fa875483b, type: 2}
+      nbrToSpawn: 10
+    - data: {fileID: 11400000, guid: 88f7d33a65a68df4a9a2515e789b42e5, type: 2}
+      nbrToSpawn: 20
+    - data: {fileID: 11400000, guid: 3f416a9948899f34093026925af4069e, type: 2}
+      nbrToSpawn: 10
+  - ennemiesType:
+    - data: {fileID: 11400000, guid: d5b7acb1e97b4144f90af08fa875483b, type: 2}
+      nbrToSpawn: 30
+    - data: {fileID: 11400000, guid: 88f7d33a65a68df4a9a2515e789b42e5, type: 2}
+      nbrToSpawn: 8
     - data: {fileID: 11400000, guid: 3f416a9948899f34093026925af4069e, type: 2}
       nbrToSpawn: 8
-  - ennemiesType:
-    - data: {fileID: 11400000, guid: d5b7acb1e97b4144f90af08fa875483b, type: 2}
-      nbrToSpawn: 10
-    - data: {fileID: 11400000, guid: 88f7d33a65a68df4a9a2515e789b42e5, type: 2}
-      nbrToSpawn: 20
-    - data: {fileID: 11400000, guid: 3f416a9948899f34093026925af4069e, type: 2}
-      nbrToSpawn: 10
-  - ennemiesType:
-    - data: {fileID: 11400000, guid: d5b7acb1e97b4144f90af08fa875483b, type: 2}
-      nbrToSpawn: 20
-    - data: {fileID: 11400000, guid: 88f7d33a65a68df4a9a2515e789b42e5, type: 2}
-      nbrToSpawn: 12
-    - data: {fileID: 11400000, guid: 3f416a9948899f34093026925af4069e, type: 2}
-      nbrToSpawn: 6
     - data: {fileID: 11400000, guid: 0c0e28fa7b2b13a48b3a61af8aae1a21, type: 2}
       nbrToSpawn: 6
   spawn:

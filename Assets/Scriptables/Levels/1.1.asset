@@ -19,6 +19,9 @@ MonoBehaviour:
   - ennemiesType:
     - data: {fileID: 11400000, guid: d5b7acb1e97b4144f90af08fa875483b, type: 2}
       nbrToSpawn: 5
+  - ennemiesType:
+    - data: {fileID: 11400000, guid: d5b7acb1e97b4144f90af08fa875483b, type: 2}
+      nbrToSpawn: 8
   spawn:
   - {x: 0, y: 0, z: 16}
   end:
