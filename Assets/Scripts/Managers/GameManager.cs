@@ -24,25 +24,21 @@ public class GameManager : MonoBehaviour
 		DontDestroyOnLoad(gameObject);
 	}
 
-	public void PlayMusic(bool isMusicEnded = false, bool isLoop = false)
+	public IEnumerator PlayMusic(bool isLoop = false)
 	{
-		if (musics.Count == 0)
-			return;
+		if (musics.Count > 0)
+		{
+			int musicIndex = UnityEngine.Random.Range(0, musics.Count);
+			audioSource.clip = musics[musicIndex];
+			audioSource.Play();
 
-		int musicIndex = UnityEngine.Random.Range(0, musics.Count);
-		audioSource.clip = musics[musicIndex];
-		audioSource.Play();
+			yield return new WaitForSeconds(musics[musicIndex].length + 1f);
 
-		if (musics.Count > 1 || isLoop)
-			Invoke(nameof(PlayMusic), musics[musicIndex].length + 1f);
-
-		if (isMusicEnded)
-			Invoke(nameof(MusicEnded), musics[musicIndex].length + 1f);
-	}
-
-	private void MusicEnded()
-	{
-		OnMusicEnded?.Invoke();
+			if (musics.Count > 1 || isLoop)
+				StartCoroutine(PlayMusic(isLoop));
+			else
+				OnMusicEnded?.Invoke();
+		}
 	}
 
 	public void StopMusic()
@@ -50,5 +46,10 @@ public class GameManager : MonoBehaviour
 		CancelInvoke();
 		musics.Clear();
 		audioSource.Stop();
+	}
+
+	public void Quit()
+	{
+		Application.Quit();
 	}
 }

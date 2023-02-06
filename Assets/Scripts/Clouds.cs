@@ -32,7 +32,7 @@ public class Clouds : MonoBehaviour
 		clouds.RemoveAt(cloudIndex);
 		cloud.SetActive(true);
 
-		cloud.transform.position = new Vector3(Random.Range(-50, 50), Random.Range(-25, -40), Random.Range(-180, -220));
+		cloud.transform.position = new Vector3(Random.Range(-100, 100), Random.Range(-25, -40), Random.Range(-180, -220));
 		cloud.transform.localScale = new Vector3(Random.Range(4f, 6f), Random.Range(4f, 6f), Random.Range(4f, 6f));
 
 		StartCoroutine(ResetCloud(cloud));

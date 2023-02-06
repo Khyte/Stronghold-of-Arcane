@@ -14,9 +14,26 @@ public static class LoadAndSaveData
 		path = Application.persistentDataPath;
 
 		if (!File.Exists($"{path}/Save.json"))
-			File.Create($"{path}/Save.json");
+		{
+			using (FileStream file = File.Open($"{path}/Save.json", FileMode.OpenOrCreate))
+			{
+				DataManager.Instance.Data = new Data();
+				DataManager.Instance.Data.savedWorlds = 0;
+				DataManager.Instance.Data.volume = 1;
 
-		LoadData();
+				string saveJSON = Convert.ToBase64String(Encoding.UTF8.GetBytes(JsonUtility.ToJson(DataManager.Instance.Data)));
+				byte[] info = Encoding.UTF8.GetBytes(saveJSON);
+				file.Write(info, 0, info.Length);
+			}
+
+			DataManager.Instance.Data = new Data();
+			DataManager.Instance.Data.savedWorlds = 0;
+			DataManager.Instance.Data.volume = 1;
+
+			SaveData();
+		}
+		else
+			LoadData();
 	}
 
 	public static void SaveData()

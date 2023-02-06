@@ -28,7 +28,12 @@ public class DataManager : MonoBehaviour
 		else
 			Instance = this;
 
-		FirstLoad();
+		LoadAndSaveData.LoadFirstTime();
+	}
+
+	private void Start()
+	{
+		AudioListener.volume = Data.volume;
 	}
 
 	private void Update()
@@ -51,12 +56,6 @@ public class DataManager : MonoBehaviour
 			SaveData(7);
 		if (Input.GetKeyDown(KeyCode.Alpha8))
 			SaveData(8);
-	}
-
-	private void FirstLoad()
-	{
-		LoadAndSaveData.LoadFirstTime();
-		AudioListener.volume = Data.volume;
 	}
 
 	public void SaveData(int world = -1, float volume = -1)

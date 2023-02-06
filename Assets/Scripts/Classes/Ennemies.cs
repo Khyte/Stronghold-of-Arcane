@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -6,10 +7,11 @@ using UnityEngine.AI;
 public class Ennemies : MonoBehaviour
 {
 	public EnnemiesData data;
+	public NavMeshAgent agent;
+
+	public event Action<Ennemies> OnEnnemyDie;
 
 	public float actualHP;
-
-	public NavMeshAgent agent;
 
 	public void InitializeEnnemy()
 	{
@@ -21,7 +23,7 @@ public class Ennemies : MonoBehaviour
 		agent.speed = data.speed;
 		agent.SetDestination(targetPosition);
 
-		actualHP = data.maxHP;
+		actualHP = data.maxHP + DataManager.Instance.actualLevel.levelId * data.hpModifier;
 	}
 
 	private void OnTriggerEnter(Collider other)
@@ -30,6 +32,8 @@ public class Ennemies : MonoBehaviour
 		{
 			GameController.Instance.TakeDamage();
 			gameObject.SetActive(false);
+
+			OnEnnemyDie?.Invoke(this);
 		}
 
 		if (other.tag == "Projectile")
@@ -42,6 +46,8 @@ public class Ennemies : MonoBehaviour
 				{
 					gameObject.SetActive(false);
 					GameController.Instance.GetOrLoseMoney(data.moneyDrop);
+
+					OnEnnemyDie?.Invoke(this);
 				}
 
 				other.GetComponent<Collider>().enabled = false;

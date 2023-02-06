@@ -8,6 +8,7 @@ public class SpawnController : MonoBehaviour
 	private Wave actualWave;
 
 	private List<EnnemiesData> waveEnnemies;
+	private List<EnnemiesData> actualEnnemies;
 	private List<Ennemies> ennemiesPool = new List<Ennemies>();
 
 	private int actualEnnemyIndex;
@@ -20,7 +21,7 @@ public class SpawnController : MonoBehaviour
 		ennemy.InitializeEnnemy();
 	}
 
-	public void SpawnEnnemies()
+	/*public void SpawnEnnemies()
 	{
 		waves = GameController.Instance.waves;
 
@@ -37,23 +38,26 @@ public class SpawnController : MonoBehaviour
 				ennemiesPool.Add(ennemyComp);
 			}
 		}
-	}
+	}*/
 
 	public void StartNewWave()
 	{
+		GameController.Instance.nextWaveButton.SetActive(false);
+		waves = GameController.Instance.waves;
+
 		if (GameController.Instance.actualWaveIndex >= waves.Count)
 			return;
 
 		actualWave = waves[GameController.Instance.actualWaveIndex];
 		waveEnnemies = new List<EnnemiesData>();
-
-		GameController.Instance.isEndOfWave = false;
+		actualEnnemies = new List<EnnemiesData>();
 
 		for (int i = 0 ; i < actualWave.ennemiesType.Count ; i++)
 		{
 			for (int j = 0 ; j < actualWave.ennemiesType[i].nbrToSpawn ; j++)
 			{
 				waveEnnemies.Add(actualWave.ennemiesType[i].data);
+				actualEnnemies.Add(actualWave.ennemiesType[i].data);
 			}
 		}
 
@@ -67,7 +71,8 @@ public class SpawnController : MonoBehaviour
 
 	private void LaunchWave()
 	{
-		GameController.Instance.isWaveActive = true;
+		if (GameController.Instance.life <= 0)
+			return;
 
 		int choice = Random.Range(0, waveEnnemies.Count - 1);
 
@@ -90,6 +95,8 @@ public class SpawnController : MonoBehaviour
 			ennemiesPool.Add(ennemy);
 		}
 
+		ennemy.OnEnnemyDie += CheckVictory;
+
 		InitializeEnnemy(ennemy, waveEnnemies[choice]);
 
 		int selectSpawn = Random.Range(0, GameController.Instance.spawns.Count);
@@ -109,16 +116,41 @@ public class SpawnController : MonoBehaviour
 
 		if (waveEnnemies.Count > 0)
 			Invoke(nameof(LaunchWave), Random.Range(2f, 3.5f));
+	}
+
+	private void CheckVictory(Ennemies ennemy)
+	{
+		ennemy.OnEnnemyDie -= CheckVictory;
+
+		if (GameController.Instance.life <= 0)
+		{
+			for (int i = 0 ; i < ennemiesPool.Count ; i++)
+			{
+				ennemiesPool[i].gameObject.SetActive(false);
+			}
+
+			for (int i = 0 ; i < GameController.Instance.towers.Count ; i++)
+			{
+				GameController.Instance.towers[i].target = null;
+				GameController.Instance.towers[i].availableTargets.Clear();
+			}
+
+			GameController.Instance.Lose();
+		}
 		else
 		{
-			GameController.Instance.isEndOfWave = true;
+			actualEnnemies.Remove(ennemy.data);
 
-			// //
-
-			GameController.Instance.isWaveActive = false;
-			GameController.Instance.actualWaveIndex++;
-
-			// //
+			if (actualEnnemies.Count <= 0)
+			{
+				if (GameController.Instance.actualWaveIndex + 1 >= waves.Count)
+					GameController.Instance.Victory();
+				else
+				{
+					GameController.Instance.actualWaveIndex++;
+					GameController.Instance.nextWaveButton.SetActive(true);
+				}
+			}
 		}
 	}
 }

@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class GameController : MonoBehaviour
@@ -13,9 +14,7 @@ public class GameController : MonoBehaviour
 	public SpawnController spawnController;
 
 	public List<Wave> waves = new List<Wave>();
-
-	public GameObject spawnPrefab;
-	public GameObject endPrefab;
+	public List<Towers> towers = new List<Towers>();
 
 	public List<Transform> spawns;
 	public List<Transform> ends;
@@ -24,14 +23,21 @@ public class GameController : MonoBehaviour
 	public int money = 30;
 	public int actualWaveIndex = 0;
 
-	public bool isDefeat;
-	public bool isWaveActive;
-	public bool isEndOfWave;
+	[SerializeField]
+	private GameObject spawnPrefab;
+	[SerializeField]
+	private GameObject endPrefab;
 
 	[SerializeField]
 	private TextMeshProUGUI lifeText;
 	[SerializeField]
 	private TextMeshProUGUI moneyText;
+
+	public GameObject nextWaveButton;
+	[SerializeField]
+	private GameObject winMenu;
+	[SerializeField]
+	private GameObject loseMenu;
 
 	[SerializeField]
 	private TextMeshProUGUI waveText;
@@ -62,38 +68,21 @@ public class GameController : MonoBehaviour
 		StartMusic();
 		CreateWorld();
 		InitUI();
-
-		spawnController.SpawnEnnemies();
-	}
-
-	private void Update()
-	{
-		if (Input.GetKeyDown(KeyCode.L) && !isWaveActive)
-		{
-			spawnController.StartNewWave();
-		}
-	}
-
-	private void InitUI()
-	{
-		lifeText.text = life.ToString();
-		moneyText.text = money.ToString();
-		waveText.text = "";
-		waveCompletion.fillAmount = 0;
 	}
 
 	private void StartMusic()
 	{
+		GameManager.Instance.musics.Clear();
 		GameManager.Instance.musics.Add(introMusic);
 		GameManager.Instance.OnMusicEnded += PlayBattleMusic;
-		GameManager.Instance.PlayMusic(true);
+		StartCoroutine(GameManager.Instance.PlayMusic());
 	}
 
 	private void PlayBattleMusic()
 	{
 		GameManager.Instance.OnMusicEnded -= PlayBattleMusic;
 		GameManager.Instance.musics = battleMusics;
-		GameManager.Instance.PlayMusic();
+		StartCoroutine(GameManager.Instance.PlayMusic());
 	}
 
 	private void CreateWorld()
@@ -119,19 +108,26 @@ public class GameController : MonoBehaviour
 		}
 
 		waves = actualLevel.waves;
+		NavMesh.RemoveAllNavMeshData();
 		dataInstance = NavMesh.AddNavMeshData(actualLevel.navMesh);
+	}
+
+	private void InitUI()
+	{
+		lifeText.text = life.ToString();
+		money = actualLevel.initialMoney;
+		moneyText.text = money.ToString();
+		waveText.text = "";
+		waveCompletion.fillAmount = 0;
 	}
 
 	public void TakeDamage()
 	{
-		if (isDefeat)
-			return;
-
 		life--;
 		lifeText.text = life.ToString();
 
 		if (life <= 0)
-			isDefeat = true;
+			Lose();
 	}
 
 	public void GetOrLoseMoney(int value)
@@ -148,6 +144,46 @@ public class GameController : MonoBehaviour
 	public void ActualWaveDisplay(int waveIndex)
 	{
 		waveText.text = $"Vague {waveIndex}/{waves.Count}";
+	}
+
+	public void Victory()
+	{
+		if (life > 0)
+		{
+			winMenu.SetActive(true);
+
+			if (actualLevel.levelId + 1 > DataManager.Instance.Data.savedWorlds && actualLevel.levelId + 1 < 8)
+				DataManager.Instance.SaveData(actualLevel.levelId + 1);
+		}
+	}
+
+	public void Lose()
+	{
+		loseMenu.SetActive(true);
+	}
+
+	public void Continue()
+	{
+		if (actualLevel.levelId + 1 < 9)
+		{
+			DataManager.Instance.actualLevel = DataManager.Instance.allLevels[actualLevel.levelId + 1];
+			SceneManager.LoadScene("BattleScene");
+		}
+	}
+
+	public void Retry()
+	{
+		SceneManager.LoadScene("BattleScene");
+	}
+
+	public void Menu()
+	{
+		SceneManager.LoadScene("MainMenu");
+	}
+
+	public void Quit()
+	{
+		Application.Quit();
 	}
 }
 

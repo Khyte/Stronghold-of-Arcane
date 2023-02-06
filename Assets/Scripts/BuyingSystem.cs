@@ -1,10 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class BuyingSystem : MonoBehaviour
 {
-    public GameObject towerPrefab;
+	public GameObject towerPrefab;
 
 	[SerializeField]
 	private GameObject shopMenu;
@@ -12,7 +13,8 @@ public class BuyingSystem : MonoBehaviour
 	private GameObject upgradeMenu;
 
 	private Camera mainCam;
-	private LayerMask layerMask;
+	private LayerMask selectableLayer;
+	private LayerMask uiLayer;
 
 	private GameObject selectedArcane;
 	private GameObject selectedTower;
@@ -20,7 +22,8 @@ public class BuyingSystem : MonoBehaviour
 	private void Awake()
 	{
 		mainCam = Camera.main;
-		layerMask = LayerMask.GetMask("SelectableObjects");
+		selectableLayer = LayerMask.GetMask("SelectableObjects");
+		uiLayer = LayerMask.GetMask("UI");
 
 		shopMenu.SetActive(false);
 		upgradeMenu.SetActive(false);
@@ -37,9 +40,22 @@ public class BuyingSystem : MonoBehaviour
 #endif
 	}
 
+	private bool IsPointerOverUIObject()
+	{
+		PointerEventData eventDataCurrentPosition = new PointerEventData(EventSystem.current);
+		eventDataCurrentPosition.position = new Vector2(Input.mousePosition.x, Input.mousePosition.y);
+		List<RaycastResult> results = new List<RaycastResult>();
+		EventSystem.current.RaycastAll(eventDataCurrentPosition, results);
+
+		return results.Count > 0;
+	}
+
 	private void CheckForOpeningMenu()
 	{
 		if (mainCam == null)
+			return;
+
+		if (IsPointerOverUIObject())
 			return;
 
 		Ray ray;
@@ -51,7 +67,7 @@ public class BuyingSystem : MonoBehaviour
 		ray = mainCam.ScreenPointToRay(new Vector3(touch.position.x, touch.position.y, 0));
 #endif
 
-		if (Physics.Raycast(ray, out RaycastHit hit, Mathf.Infinity, layerMask))
+		if (Physics.Raycast(ray, out RaycastHit hit, Mathf.Infinity, selectableLayer))
 		{
 			if (hit.transform.tag == "Arcane")
 			{
@@ -79,10 +95,15 @@ public class BuyingSystem : MonoBehaviour
 
 					childIndex++;
 				}
-				
+
 				upgradeMenu.transform.position = mainCam.WorldToScreenPoint(hit.transform.position);
 				upgradeMenu.SetActive(true);
 			}
+		}
+		else
+		{
+			shopMenu.SetActive(false);
+			upgradeMenu.SetActive(false);
 		}
 	}
 
@@ -93,8 +114,20 @@ public class BuyingSystem : MonoBehaviour
 
 		GameController.Instance.GetOrLoseMoney(-tower.cost);
 
-		Instantiate(tower.prefab, selectedArcane.transform.position - selectedArcane.transform.up * 0.5f, Quaternion.identity, selectedArcane.transform);
+		GameObject newTower = Instantiate(tower.prefab, selectedArcane.transform.position - selectedArcane.transform.up * 0.5f, Quaternion.identity, selectedArcane.transform);
 		selectedArcane.GetComponent<Collider>().enabled = false;
+		shopMenu.SetActive(false);
+
+		GameController.Instance.towers.Add(newTower.GetComponent<Towers>());
+	}
+
+	public void SellTower(Towers tower)
+	{
+		GameController.Instance.GetOrLoseMoney(tower.data.cost);
+		GameController.Instance.towers.Remove(tower);
+
+		Destroy(tower.gameObject);
+		selectedArcane.GetComponent<Collider>().enabled = true;
 		shopMenu.SetActive(false);
 	}
 

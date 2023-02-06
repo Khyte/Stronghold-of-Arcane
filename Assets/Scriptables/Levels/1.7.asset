@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8c490dcc789ce3a46bea79d76ea8f268, type: 3}
   m_Name: 1.7
   m_EditorClassIdentifier: 
-  levelId: 1.7
+  levelId: 6
   map: {fileID: 5864343569489183350, guid: d83361264150e4549a647a5e87ee3563, type: 3}
   navMesh: {fileID: 23800000, guid: 8e8ac0047fcc8e340a90b1ce23e7bdc8, type: 2}
   waves:
@@ -52,3 +52,6 @@ MonoBehaviour:
   - {x: 0, y: 0, z: -24}
   - {x: 8, y: 0, z: -24}
   - {x: -8, y: 0, z: -24}
+  initialMoney: 40
+  isCompleted: 0
+  stars: 0
