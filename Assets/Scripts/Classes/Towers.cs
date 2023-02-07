@@ -11,7 +11,7 @@ public class Towers : MonoBehaviour
 	[SerializeField]
 	private Transform spawnProjectile;
 
-	public Projector range;
+	public GameObject range;
 
 	public Ennemies target;
 	public List<Ennemies> availableTargets = new List<Ennemies>();
@@ -37,8 +37,8 @@ public class Towers : MonoBehaviour
 	{
 		GetComponent<CapsuleCollider>().radius = data.range;
 		actualDamage = data.baseAttack;
-		range.fieldOfView = data.range * 30;
-		range.gameObject.SetActive(false);
+		range.transform.localScale *= data.range * 0.2f;
+		range.SetActive(false);
 	}
 
 	private GameObject CreateNewProjectile()
@@ -135,7 +135,16 @@ public class Towers : MonoBehaviour
 			{
 				for (int j = 0 ; j < GameController.Instance.ends.Count ; j++)
 				{
-					float distance = Vector3.Distance(availableTargets[i].transform.position, GameController.Instance.ends[j].position);
+					//float distance = Vector3.Distance(availableTargets[i].transform.position, GameController.Instance.ends[j].position);
+					float distance = 0;
+					Vector3[] points = availableTargets[i].agent.path.corners;
+
+					for (int k = 0 ; k < points.Length - 1 ; k++)
+					{
+						distance += Vector3.Distance(points[k], points[k + 1]);
+					}
+
+					Debug.LogWarning($"DISTANCE {availableTargets[i].name} : {distance}");
 
 					if (distanceToEnd > distance)
 					{

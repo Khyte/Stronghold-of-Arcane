@@ -21,25 +21,6 @@ public class SpawnController : MonoBehaviour
 		ennemy.InitializeEnnemy();
 	}
 
-	/*public void SpawnEnnemies()
-	{
-		waves = GameController.Instance.waves;
-
-		for (int i = 0 ; i < waves[0].ennemiesType.Count ; i++)
-		{
-			for (int j = 0 ; j < waves[0].ennemiesType[i].nbrToSpawn ; j++)
-			{
-				GameObject ennemy = Instantiate(waves[0].ennemiesType[i].data.prefab, Vector3.zero, Quaternion.identity, null);
-
-				Ennemies ennemyComp = ennemy.GetComponent<Ennemies>();
-				InitializeEnnemy(ennemyComp, waves[0].ennemiesType[i].data);
-
-				ennemy.SetActive(false);
-				ennemiesPool.Add(ennemyComp);
-			}
-		}
-	}*/
-
 	public void StartNewWave()
 	{
 		GameController.Instance.nextWaveButton.SetActive(false);
@@ -115,7 +96,7 @@ public class SpawnController : MonoBehaviour
 		GameController.Instance.WaveCompletion(actualEnnemyIndex, maxEnnemies);
 
 		if (waveEnnemies.Count > 0)
-			Invoke(nameof(LaunchWave), Random.Range(2f, 3.5f));
+			Invoke(nameof(LaunchWave), Random.Range(3.5f, 5f));
 	}
 
 	private void CheckVictory(Ennemies ennemy)

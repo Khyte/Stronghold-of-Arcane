@@ -17,7 +17,7 @@ public class BuyingSystem : MonoBehaviour
 	private LayerMask uiLayer;
 
 	private GameObject selectedArcane;
-	private GameObject selectedTower;
+	private Towers selectedTower;
 
 	private void Awake()
 	{
@@ -77,8 +77,11 @@ public class BuyingSystem : MonoBehaviour
 			}
 			else if (hit.transform.tag == "Tower")
 			{
-				selectedTower = hit.transform.parent.gameObject;
-				selectedTower.GetComponent<Towers>().range.gameObject.SetActive(true);
+				if (selectedTower != null)
+					selectedTower.range.SetActive(false);
+
+				selectedTower = hit.transform.GetComponentInParent<Towers>();
+				selectedTower.range.SetActive(true);
 				int upgrade = selectedTower.GetComponent<Towers>().actualUpgrade + 1;
 
 				if (upgrade > 3)
@@ -104,6 +107,12 @@ public class BuyingSystem : MonoBehaviour
 		{
 			shopMenu.SetActive(false);
 			upgradeMenu.SetActive(false);
+
+			if (selectedTower != null)
+			{
+				selectedTower.range.SetActive(false);
+				selectedTower = null;
+			}
 		}
 	}
 
@@ -121,28 +130,26 @@ public class BuyingSystem : MonoBehaviour
 		GameController.Instance.towers.Add(newTower.GetComponent<Towers>());
 	}
 
-	public void SellTower(Towers tower)
+	public void SellTower()
 	{
-		GameController.Instance.GetOrLoseMoney(tower.data.cost);
-		GameController.Instance.towers.Remove(tower);
+		GameController.Instance.GetOrLoseMoney(selectedTower.data.cost);
+		GameController.Instance.towers.Remove(selectedTower);
 
-		Destroy(tower.gameObject);
+		Destroy(selectedTower.gameObject);
 		selectedArcane.GetComponent<Collider>().enabled = true;
 		shopMenu.SetActive(false);
 	}
 
 	public void UpgradeTower(int upgrade)
 	{
-		Towers tower = selectedTower.GetComponent<Towers>();
-
-		if (tower.data.costPerUpgrade > GameController.Instance.money)
+		if (selectedTower.data.costPerUpgrade > GameController.Instance.money)
 			return;
 
-		GameController.Instance.GetOrLoseMoney(-tower.data.costPerUpgrade);
+		GameController.Instance.GetOrLoseMoney(-selectedTower.data.costPerUpgrade);
 
-		tower.actualDamage = tower.data.baseAttack + (tower.data.attackModifier * upgrade);
-		tower.actualUpgrade = upgrade;
+		selectedTower.actualDamage = selectedTower.data.baseAttack + (selectedTower.data.attackModifier * upgrade);
+		selectedTower.actualUpgrade = upgrade;
 		upgradeMenu.SetActive(false);
-		tower.range.gameObject.SetActive(false);
+		selectedTower.range.gameObject.SetActive(false);
 	}
 }

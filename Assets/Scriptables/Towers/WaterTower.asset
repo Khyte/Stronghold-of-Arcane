@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 3
   towerName: WaterTower
-  prefab: {fileID: 8531208638965427925, guid: 462e2cb5b05317948b90a38d07958755, type: 3}
+  prefab: {fileID: 4388488743785188691, guid: f412a5b08f4893c49a5a24022ad646e8, type: 3}
   baseAttack: 2
   attackModifier: 1
   attackSpeed: 1

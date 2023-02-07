@@ -7,7 +7,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: RangeMat
+  m_Name: Intersection
   m_Shader: {fileID: 4800000, guid: 35db264536e88334c96f8cc2fe2b474b, type: 3}
   m_ShaderKeywords: 
   m_LightmapFlags: 4
@@ -43,6 +43,14 @@ Material:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - _MainTex2:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _MainTex3:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - _MetallicGlossMap:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
@@ -56,17 +64,27 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     m_Floats:
+    - _Alpha1: 0
+    - _Alpha2: 0
+    - _Alpha3: 0
+    - _Bri: 0
     - _BumpScale: 1
+    - _Con: 1
     - _Cutoff: 0.5
     - _DetailNormalMapScale: 1
     - _DstBlend: 0
     - _GlossMapScale: 1
     - _Glossiness: 0.5
     - _GlossyReflections: 1
+    - _InterAlpha: 0
+    - _InterEdge: 3
+    - _InterPow: 1
+    - _InvFade: 10
     - _Metallic: 0
     - _Mode: 0
     - _OcclusionStrength: 1
     - _Parallax: 0.02
+    - _Queue: 3000
     - _Radius: 0.5
     - _RadiusWidth: 2
     - _SmoothnessTextureChannel: 0
@@ -74,9 +92,42 @@ Material:
     - _SrcBlend: 1
     - _UVSec: 0
     - _ZWrite: 1
+    - _ac: 0
+    - _fT: 1
+    - _fTA: 0
+    - _fTAE: 0
+    - _interT: 1
+    - _inv1: 0
+    - _inv2: 0
+    - _inv3: 0
+    - _invAlpha1: 0
+    - _invAlpha2: 0
+    - _invAlpha3: 0
+    - _numberTex: 0
+    - _rgbc: 0
+    - _sT: 1
+    - _sTA: 0
+    - _sTAE: 0
+    - _tT: 1
+    - _tTA: 0
+    - _tTAE: 0
     m_Colors:
     - _Center: {r: 0, g: 0, b: 0, a: 0}
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
+    - _InterColor: {r: 0.7, g: 0, b: 1, a: 1}
+    - _Pan1: {r: 0, g: 0, b: 0, a: 0}
+    - _Pan2: {r: 0, g: 0, b: 0, a: 0}
+    - _Pan3: {r: 0, g: 0, b: 0, a: 0}
     - _RadiusColor: {r: 1, g: 0, b: 0, a: 1}
+    - _Rot1: {r: 0.5, g: 0.5, b: 0, a: 0}
+    - _Rot2: {r: 0.5, g: 0.5, b: 0, a: 0}
+    - _Rot3: {r: 0.5, g: 0.5, b: 0, a: 0}
+    - _Scale: {r: 1, g: 1, b: 0.5, a: 0.5}
+    - _Scale2: {r: 1, g: 1, b: 0.5, a: 0.5}
+    - _Scale3: {r: 1, g: 1, b: 0.5, a: 0.5}
+    - _Tile1: {r: 1, g: 1, b: 0, a: 0}
+    - _Tile2: {r: 1, g: 1, b: 0, a: 0}
+    - _Tile3: {r: 1, g: 1, b: 0, a: 0}
+    - _TintColor: {r: 0.5, g: 0.5, b: 0.5, a: 0.5}
   m_BuildTextureStacks: []

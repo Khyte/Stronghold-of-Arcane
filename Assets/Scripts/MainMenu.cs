@@ -8,6 +8,8 @@ using UnityEngine.UI;
 public class MainMenu : MonoBehaviour
 {
 	[SerializeField]
+	private GameObject disclaimer;
+	[SerializeField]
 	private Transform btnsParent;
 	[SerializeField]
 	private Transform levelsParent;
@@ -25,8 +27,14 @@ public class MainMenu : MonoBehaviour
 	[SerializeField]
 	private Slider volumeSlider;
 
+	// A SUPPRIMER
+	[SerializeField]
+	private Animator disclaimAnim;
+	//
+
 	private void Awake()
 	{
+		disclaimer.SetActive(true);
 		btnsParent.gameObject.SetActive(true);
 		levelsParent.gameObject.SetActive(false);
 		optionsParent.gameObject.SetActive(false);
@@ -40,6 +48,18 @@ public class MainMenu : MonoBehaviour
 		UnlockedLevel();
 		InitializeOptions();
 	}
+
+#if UNITY_EDITOR
+	private void Update()
+	{
+		if (Input.GetKeyDown(KeyCode.A))
+		{
+			disclaimAnim.enabled = false;
+			disclaimer.SetActive(false);
+			
+		}
+	}
+#endif
 
 	private void UnlockedLevel()
 	{
