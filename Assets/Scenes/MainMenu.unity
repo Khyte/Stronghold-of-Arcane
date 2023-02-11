@@ -5835,7 +5835,9 @@ MonoBehaviour:
   menuMusics:
   - {fileID: 8300000, guid: 8be4e48b06a6c47e08d4e41dda53da50, type: 3}
   - {fileID: 8300000, guid: 4287842f1516b4ddf820dc918ed208ad, type: 3}
-  - {fileID: 8300000, guid: f871d8687eb43451eb8f834e3b78e707, type: 3}
+  - {fileID: 8300000, guid: 38569b9f0669d0346b6eef3b3a8e5e70, type: 3}
+  - {fileID: 8300000, guid: 1424cc3ba8cf2486da2883806de402d2, type: 3}
+  - {fileID: 8300000, guid: fcf660c4228b2cb48991f1a519d51dda, type: 3}
   volumeSlider: {fileID: 182256605}
   disclaimAnim: {fileID: 296780421}
 --- !u!4 &1925551644

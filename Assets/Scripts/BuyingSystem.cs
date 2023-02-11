@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
 public class BuyingSystem : MonoBehaviour
 {
@@ -11,6 +12,13 @@ public class BuyingSystem : MonoBehaviour
 	private GameObject shopMenu;
 	[SerializeField]
 	private GameObject upgradeMenu;
+
+	[SerializeField]
+	private List<Button> upgradesBtn;
+	[SerializeField]
+	private List<GameObject> locksBtn;
+	[SerializeField]
+	private List<GameObject> okBtns;
 
 	private Camera mainCam;
 	private LayerMask selectableLayer;
@@ -27,6 +35,11 @@ public class BuyingSystem : MonoBehaviour
 
 		shopMenu.SetActive(false);
 		upgradeMenu.SetActive(false);
+
+		for (int i = 1 ; i < upgradesBtn.Count ; i++)
+		{
+			upgradesBtn[i].enabled = false;
+		}
 	}
 
 	private void Update()
@@ -72,8 +85,8 @@ public class BuyingSystem : MonoBehaviour
 			if (hit.transform.tag == "Arcane")
 			{
 				selectedArcane = hit.transform.gameObject;
-				shopMenu.transform.position = mainCam.WorldToScreenPoint(hit.transform.position);
 				shopMenu.SetActive(true);
+				upgradeMenu.SetActive(false);
 			}
 			else if (hit.transform.tag == "Tower")
 			{
@@ -82,24 +95,60 @@ public class BuyingSystem : MonoBehaviour
 
 				selectedTower = hit.transform.GetComponentInParent<Towers>();
 				selectedTower.range.SetActive(true);
-				int upgrade = selectedTower.GetComponent<Towers>().actualUpgrade + 1;
 
-				if (upgrade > 3)
-					return;
-
-				int childIndex = 0;
-
-				foreach (Transform child in upgradeMenu.transform)
+				switch (selectedTower.actualUpgrade)
 				{
-					if (childIndex == upgrade - 1)
-						child.gameObject.SetActive(true);
-					else
-						child.gameObject.SetActive(false);
+					case 1:
+						upgradesBtn[0].enabled = false;
+						upgradesBtn[1].enabled = true;
+						upgradesBtn[2].enabled = false;
 
-					childIndex++;
+						locksBtn[0].SetActive(false);
+						locksBtn[1].SetActive(true);
+
+						okBtns[0].SetActive(true);
+						okBtns[1].SetActive(false);
+						okBtns[2].SetActive(false);
+						break;
+					case 2:
+						upgradesBtn[0].enabled = false;
+						upgradesBtn[1].enabled = false;
+						upgradesBtn[2].enabled = true;
+
+						locksBtn[0].SetActive(false);
+						locksBtn[1].SetActive(false);
+
+						okBtns[0].SetActive(true);
+						okBtns[1].SetActive(true);
+						okBtns[2].SetActive(false);
+						break;
+					case 3:
+						upgradesBtn[0].enabled = false;
+						upgradesBtn[1].enabled = false;
+						upgradesBtn[2].enabled = false;
+
+						locksBtn[0].SetActive(false);
+						locksBtn[1].SetActive(false);
+
+						okBtns[0].SetActive(true);
+						okBtns[1].SetActive(true);
+						okBtns[2].SetActive(true);
+						break;
+					default:
+						upgradesBtn[0].enabled = true;
+						upgradesBtn[1].enabled = false;
+						upgradesBtn[2].enabled = false;
+
+						locksBtn[0].SetActive(true);
+						locksBtn[1].SetActive(true);
+
+						okBtns[0].SetActive(false);
+						okBtns[1].SetActive(false);
+						okBtns[2].SetActive(false);
+						break;
 				}
 
-				upgradeMenu.transform.position = mainCam.WorldToScreenPoint(hit.transform.position);
+				shopMenu.SetActive(false);
 				upgradeMenu.SetActive(true);
 			}
 		}
@@ -124,20 +173,23 @@ public class BuyingSystem : MonoBehaviour
 		GameController.Instance.GetOrLoseMoney(-tower.cost);
 
 		GameObject newTower = Instantiate(tower.prefab, selectedArcane.transform.position - selectedArcane.transform.up * 0.5f, Quaternion.identity, selectedArcane.transform);
+		Towers compTower = newTower.GetComponent<Towers>();
+		compTower.arcane = selectedArcane;
 		selectedArcane.GetComponent<Collider>().enabled = false;
 		shopMenu.SetActive(false);
 
-		GameController.Instance.towers.Add(newTower.GetComponent<Towers>());
+		GameController.Instance.towers.Add(compTower);
 	}
 
 	public void SellTower()
 	{
 		GameController.Instance.GetOrLoseMoney(selectedTower.data.cost);
 		GameController.Instance.towers.Remove(selectedTower);
+		selectedTower.arcane.GetComponent<CapsuleCollider>().enabled = true;
 
 		Destroy(selectedTower.gameObject);
-		selectedArcane.GetComponent<Collider>().enabled = true;
-		shopMenu.SetActive(false);
+		
+		upgradeMenu.SetActive(false);
 	}
 
 	public void UpgradeTower(int upgrade)
@@ -149,7 +201,5 @@ public class BuyingSystem : MonoBehaviour
 
 		selectedTower.actualDamage = selectedTower.data.baseAttack + (selectedTower.data.attackModifier * upgrade);
 		selectedTower.actualUpgrade = upgrade;
-		upgradeMenu.SetActive(false);
-		selectedTower.range.gameObject.SetActive(false);
 	}
 }

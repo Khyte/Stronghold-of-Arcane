@@ -21,6 +21,6 @@ MonoBehaviour:
   range: 600
   cost: 30
   costPerUpgrade: 15
-  forceOfProjectile: 300
+  forceOfProjectile: 400
   timeDisableProjectile: 3
   isDotTower: 0

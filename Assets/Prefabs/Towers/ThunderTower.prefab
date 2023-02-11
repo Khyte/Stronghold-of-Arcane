@@ -4949,7 +4949,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   data: {fileID: 11400000, guid: da11027e392c387429752906bab6d0f5, type: 2}
-  projectilePrefab: {fileID: 1631489151481827808, guid: e9e9e3b439bb2a842a12e05b0c0b832a, type: 3}
+  projectilePrefab: {fileID: 8312513229998214784, guid: e9e9e3b439bb2a842a12e05b0c0b832a, type: 3}
   spawnProjectile: {fileID: 8044108936290778111}
   range: {fileID: 5433652009504610288}
   target: {fileID: 0}

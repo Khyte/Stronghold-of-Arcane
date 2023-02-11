@@ -128,7 +128,7 @@ public class CameraController : MonoBehaviour
 		}
 		else if (SystemInfo.deviceType == DeviceType.Handheld)
 		{
-			/*if (Input.touchCount == 2)
+			if (Input.touchCount == 2)
 			{ // Zoom
 				Touch touchZero = Input.GetTouch(0);
 				Touch touchOne = Input.GetTouch(1);
@@ -141,7 +141,7 @@ public class CameraController : MonoBehaviour
 				float deltaMagDiff = prevTouchDeltaMag - TouchDeltaMag;
 
 				desiredDistance += deltaMagDiff * Time.deltaTime * zoomRate * 0.0025f * Mathf.Abs(desiredDistance);
-			}*/
+			}
 
 			if (Mode == CameraMode.Rotate)
 			{

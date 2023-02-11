@@ -11,6 +11,10 @@ public class GameManager : MonoBehaviour
 	public List<AudioClip> musics = new List<AudioClip>();
 	public event Action OnMusicEnded;
 
+	private AudioSource fadeSource;
+	private bool isFadeUp;
+	private bool isFadingVolume;
+
 	private void Awake()
 	{
 		if (Instance != null && Instance != this)
@@ -22,6 +26,12 @@ public class GameManager : MonoBehaviour
 			Instance = this;
 
 		DontDestroyOnLoad(gameObject);
+	}
+
+	private void Update()
+	{
+		if (isFadingVolume)
+			FadeVolume();
 	}
 
 	public IEnumerator PlayMusic(bool isLoop = false)
@@ -46,6 +56,47 @@ public class GameManager : MonoBehaviour
 		CancelInvoke();
 		musics.Clear();
 		audioSource.Stop();
+	}
+
+	public void StartFadeVolume(AudioSource source, bool isFadeUp = false)
+	{
+		if (isFadeUp)
+			source.volume = 0f;
+		else
+			source.volume = 1f;
+
+		fadeSource = source;
+		isFadingVolume = true;
+		this.isFadeUp = isFadeUp;
+	}
+
+	private void FadeVolume()
+	{
+		if (fadeSource != null)
+		{
+			if (isFadeUp)
+			{
+				if (fadeSource.volume >= 1f)
+				{
+					isFadingVolume = false;
+					fadeSource = null;
+					return;
+				}
+
+				fadeSource.volume += Time.deltaTime * 0.5f;
+			}
+			else
+			{
+				if (fadeSource.volume <= 0f)
+				{
+					isFadingVolume = false;
+					fadeSource = null;
+					return;
+				}
+
+				fadeSource.volume -= Time.deltaTime * 0.5f;
+			}
+		}
 	}
 
 	public void Quit()

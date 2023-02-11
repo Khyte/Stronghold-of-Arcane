@@ -4,6 +4,10 @@ using UnityEngine;
 
 public class SpawnController : MonoBehaviour
 {
+	[SerializeField]
+	private AudioClip spawnSound;
+	private AudioSource source;
+
 	private List<Wave> waves;
 	private Wave actualWave;
 
@@ -14,6 +18,12 @@ public class SpawnController : MonoBehaviour
 	private int actualEnnemyIndex;
 	private int maxEnnemies;
 
+	private void Start()
+	{
+		source = GetComponent<AudioSource>();
+		source.clip = spawnSound;
+	}
+
 	private void InitializeEnnemy(Ennemies ennemy, EnnemiesData data)
 	{
 		ennemy.data = data;
@@ -23,6 +33,8 @@ public class SpawnController : MonoBehaviour
 
 	public void StartNewWave()
 	{
+		PlaySpawnSound();
+
 		GameController.Instance.nextWaveButton.SetActive(false);
 		waves = GameController.Instance.waves;
 
@@ -48,6 +60,22 @@ public class SpawnController : MonoBehaviour
 		maxEnnemies = waveEnnemies.Count;
 
 		LaunchWave();
+	}
+
+	private void PlaySpawnSound()
+	{
+		float startTime = Random.Range(0, spawnSound.length - 20);
+		source.time = startTime;
+		GameManager.Instance.StartFadeVolume(source, true);
+		source.Play();
+		source.SetScheduledEndTime(AudioSettings.dspTime + 5f);
+
+		Invoke(nameof(FadeDown), 3f);
+	}
+
+	private void FadeDown()
+	{
+		GameManager.Instance.StartFadeVolume(source);
 	}
 
 	private void LaunchWave()

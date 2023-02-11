@@ -7,16 +7,17 @@ public class Towers : MonoBehaviour
 	public TowersData data;
 
 	[SerializeField]
-	private GameObject projectilePrefab;
+	private Projectiles projectilePrefab;
 	[SerializeField]
 	private Transform spawnProjectile;
 
+	public GameObject arcane;
 	public GameObject range;
 
 	public Ennemies target;
 	public List<Ennemies> availableTargets = new List<Ennemies>();
 
-	public List<GameObject> poolOfProjectiles = new List<GameObject>();
+	public List<Projectiles> poolOfProjectiles = new List<Projectiles>();
 
 	public float actualDamage;
 	public int actualUpgrade = 0;
@@ -26,11 +27,6 @@ public class Towers : MonoBehaviour
 	private void Start()
 	{
 		InitializeTower();
-
-		if (!data.isDotTower)
-			CreateNewProjectile();
-		/*else
-			Do smth();*/
 	}
 
 	private void InitializeTower()
@@ -41,10 +37,11 @@ public class Towers : MonoBehaviour
 		range.SetActive(false);
 	}
 
-	private GameObject CreateNewProjectile()
+	private Projectiles CreateNewProjectile()
 	{
-		GameObject projectile = Instantiate(projectilePrefab, transform);
-		projectile.SetActive(false);
+		Projectiles projectile = Instantiate(projectilePrefab, transform);
+		projectile.InitProjectile(actualDamage);
+		projectile.gameObject.SetActive(false);
 		poolOfProjectiles.Add(projectile);
 
 		return projectile;
@@ -53,20 +50,16 @@ public class Towers : MonoBehaviour
 	private void Fire()
 	{
 		isShooting = true;
-
-		if (data.isDotTower)
-			Dot();
-		else
-			Shoot();
+		Shoot();
 	}
 
 	private void Shoot()
 	{
-		GameObject projectile = null;
+		Projectiles projectile = null;
 
 		for (int i = 0 ; i < poolOfProjectiles.Count ; i++)
 		{
-			if (!poolOfProjectiles[i].activeInHierarchy)
+			if (!poolOfProjectiles[i].gameObject.activeInHierarchy)
 			{
 				projectile = poolOfProjectiles[i];
 				break;
@@ -80,16 +73,14 @@ public class Towers : MonoBehaviour
 
 		projectile.transform.position = spawnProjectile.position;
 		projectile.transform.rotation = spawnProjectile.transform.rotation;
-		projectile.name = actualDamage.ToString();
-		projectile.SetActive(true);
-
-		projectile.GetComponent<Collider>().enabled = true;
+		projectile.ResetProjectile(actualDamage);
+		projectile.gameObject.SetActive(true);
 		projectile.GetComponent<Rigidbody>().AddRelativeForce(new Vector3(0, 0, data.forceOfProjectile));
 
-		StartCoroutine(NextProjectile(projectile, data.timeDisableProjectile));
+		StartCoroutine(NextProjectile());
 	}
 
-	IEnumerator NextProjectile(GameObject projectile, float waitTime)
+	IEnumerator NextProjectile()
 	{
 		yield return new WaitForSeconds(data.attackSpeed);
 
@@ -102,21 +93,6 @@ public class Towers : MonoBehaviour
 			isShooting = false;
 		else
 			Shoot();
-
-		if (waitTime > data.attackSpeed)
-			yield return new WaitForSeconds(waitTime - data.attackSpeed);
-		else
-			yield return new WaitForEndOfFrame();
-
-		if (projectile != null)
-			ResetProjectile(projectile);
-	}
-
-	private void ResetProjectile(GameObject projectile)
-	{
-		projectile.SetActive(false);
-		projectile.GetComponent<Rigidbody>().velocity = Vector3.zero;
-		projectile.transform.position = spawnProjectile.position;
 	}
 
 	private Ennemies GetMostDangerousTarget()
@@ -135,7 +111,6 @@ public class Towers : MonoBehaviour
 			{
 				for (int j = 0 ; j < GameController.Instance.ends.Count ; j++)
 				{
-					//float distance = Vector3.Distance(availableTargets[i].transform.position, GameController.Instance.ends[j].position);
 					float distance = 0;
 					Vector3[] points = availableTargets[i].agent.path.corners;
 
@@ -143,8 +118,6 @@ public class Towers : MonoBehaviour
 					{
 						distance += Vector3.Distance(points[k], points[k + 1]);
 					}
-
-					Debug.LogWarning($"DISTANCE {availableTargets[i].name} : {distance}");
 
 					if (distanceToEnd > distance)
 					{
@@ -171,6 +144,10 @@ public class Towers : MonoBehaviour
 		if (other.tag == "Ennemy")
 		{
 			Ennemies newTarget = other.GetComponent<Ennemies>();
+
+			if (newTarget.actualHP <= 0)
+				return;
+
 			availableTargets.Add(newTarget);
 
 			if (availableTargets.Count > 1)

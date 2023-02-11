@@ -13,17 +13,47 @@ public class Ennemies : MonoBehaviour
 
 	public float actualHP;
 
+	[SerializeField]
+	private GameObject model;
+	[SerializeField]
+	private GameObject deathParticles;
+
 	public void InitializeEnnemy()
 	{
 		agent = GetComponent<NavMeshAgent>();
+		deathParticles.SetActive(false);
+		model.SetActive(true);
 	}
 
 	public void SetTarget(Vector3 targetPosition)
 	{
+		agent.enabled = true;
 		agent.speed = data.speed;
 		agent.SetDestination(targetPosition);
 
 		actualHP = data.maxHP + DataManager.Instance.actualLevel.levelId * data.hpModifier;
+	}
+
+	private void DisableEnnemy()
+	{
+		gameObject.SetActive(false);
+	}
+
+	public void TakeDamage(Projectiles projectile)
+	{
+		actualHP -= projectile.damage;
+
+		if (actualHP <= 0)
+		{
+			deathParticles.SetActive(true);
+			model.SetActive(false);
+			agent.enabled = false;
+			GameController.Instance.GetOrLoseMoney(data.moneyDrop);
+
+			OnEnnemyDie?.Invoke(this);
+			Invoke(nameof(DisableEnnemy), 2f);
+
+		}
 	}
 
 	private void OnTriggerEnter(Collider other)
@@ -32,26 +62,7 @@ public class Ennemies : MonoBehaviour
 		{
 			GameController.Instance.TakeDamage();
 			gameObject.SetActive(false);
-
 			OnEnnemyDie?.Invoke(this);
-		}
-
-		if (other.tag == "Projectile")
-		{
-			if (float.TryParse(other.name, out float damage))
-			{
-				actualHP -= damage;
-
-				if (actualHP <= 0)
-				{
-					gameObject.SetActive(false);
-					GameController.Instance.GetOrLoseMoney(data.moneyDrop);
-
-					OnEnnemyDie?.Invoke(this);
-				}
-
-				other.GetComponent<Collider>().enabled = false;
-			}
 		}
 	}
 }

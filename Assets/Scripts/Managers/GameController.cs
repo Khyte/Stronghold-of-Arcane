@@ -65,22 +65,13 @@ public class GameController : MonoBehaviour
 
 	private void Start()
 	{
-		StartMusic();
+		PlayBattleMusic();
 		CreateWorld();
 		InitUI();
 	}
 
-	private void StartMusic()
+	public void PlayBattleMusic()
 	{
-		GameManager.Instance.musics.Clear();
-		GameManager.Instance.musics.Add(introMusic);
-		GameManager.Instance.OnMusicEnded += PlayBattleMusic;
-		StartCoroutine(GameManager.Instance.PlayMusic());
-	}
-
-	private void PlayBattleMusic()
-	{
-		GameManager.Instance.OnMusicEnded -= PlayBattleMusic;
 		GameManager.Instance.musics = battleMusics;
 		StartCoroutine(GameManager.Instance.PlayMusic());
 	}

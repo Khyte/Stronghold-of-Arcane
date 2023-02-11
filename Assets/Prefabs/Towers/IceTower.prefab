@@ -5012,7 +5012,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   data: {fileID: 11400000, guid: da11027e392c387429752906bab6d0f5, type: 2}
-  projectilePrefab: {fileID: 9104943748815009513, guid: 6942bc2b5f278ac42bd364904747c060, type: 3}
+  projectilePrefab: {fileID: -6882721739056778237, guid: 6942bc2b5f278ac42bd364904747c060, type: 3}
   spawnProjectile: {fileID: 7644170857759552677}
   range: {fileID: 8291478872807874483}
   target: {fileID: 0}
