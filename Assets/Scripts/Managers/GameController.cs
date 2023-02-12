@@ -12,8 +12,11 @@ public class GameController : MonoBehaviour
 	public static GameController Instance;
 
 	public SpawnController spawnController;
+	public WaveLine waveLine;
+	public BattleUI battleUI;
 
 	public List<Wave> waves = new List<Wave>();
+	public List<TowersData> towersData = new List<TowersData>();
 	public List<Towers> towers = new List<Towers>();
 
 	public List<Transform> spawns;
@@ -27,22 +30,6 @@ public class GameController : MonoBehaviour
 	private GameObject spawnPrefab;
 	[SerializeField]
 	private GameObject endPrefab;
-
-	[SerializeField]
-	private TextMeshProUGUI lifeText;
-	[SerializeField]
-	private TextMeshProUGUI moneyText;
-
-	public GameObject nextWaveButton;
-	[SerializeField]
-	private GameObject winMenu;
-	[SerializeField]
-	private GameObject loseMenu;
-
-	[SerializeField]
-	private TextMeshProUGUI waveText;
-	[SerializeField]
-	private Image waveCompletion;
 
 	[SerializeField]
 	private AudioClip introMusic;
@@ -67,7 +54,9 @@ public class GameController : MonoBehaviour
 	{
 		PlayBattleMusic();
 		CreateWorld();
-		InitUI();
+
+		money = actualLevel.initialMoney;
+		battleUI.InitUI(money);
 	}
 
 	public void PlayBattleMusic()
@@ -101,21 +90,20 @@ public class GameController : MonoBehaviour
 		waves = actualLevel.waves;
 		NavMesh.RemoveAllNavMeshData();
 		dataInstance = NavMesh.AddNavMeshData(actualLevel.navMesh);
-	}
 
-	private void InitUI()
-	{
-		lifeText.text = life.ToString();
-		money = actualLevel.initialMoney;
-		moneyText.text = money.ToString();
-		waveText.text = "";
-		waveCompletion.fillAmount = 0;
+		for (int i = 0 ; i < spawns.Count ; i++)
+		{
+			for (int j = 0 ; j < ends.Count ; j++)
+			{
+				waveLine.CreateLine(spawns[i].position, ends[j].position);
+			}
+		}
 	}
 
 	public void TakeDamage()
 	{
 		life--;
-		lifeText.text = life.ToString();
+		battleUI.lifeText.text = life.ToString();
 
 		if (life <= 0)
 			Lose();
@@ -124,24 +112,24 @@ public class GameController : MonoBehaviour
 	public void GetOrLoseMoney(int value)
 	{
 		money += value;
-		moneyText.text = money.ToString();
+		battleUI.moneyText.text = money.ToString();
 	}
 
 	public void WaveCompletion(int value, int fromMax)
 	{
-		waveCompletion.fillAmount = DataManager.Instance.Remap(value, 0, fromMax, 0, 1);
+		battleUI.waveCompletion.fillAmount = DataManager.Instance.Remap(value, 0, fromMax, 0, 1);
 	}
 
 	public void ActualWaveDisplay(int waveIndex)
 	{
-		waveText.text = $"Vague {waveIndex}/{waves.Count}";
+		battleUI.waveText.text = $"Vague {waveIndex}/{waves.Count}";
 	}
 
 	public void Victory()
 	{
 		if (life > 0)
 		{
-			winMenu.SetActive(true);
+			battleUI.winMenu.SetActive(true);
 
 			if (actualLevel.levelId + 1 > DataManager.Instance.Data.savedWorlds && actualLevel.levelId + 1 < 8)
 				DataManager.Instance.SaveData(actualLevel.levelId + 1);
@@ -150,7 +138,7 @@ public class GameController : MonoBehaviour
 
 	public void Lose()
 	{
-		loseMenu.SetActive(true);
+		battleUI.loseMenu.SetActive(true);
 	}
 
 	public void Continue()

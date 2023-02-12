@@ -35,7 +35,8 @@ public class SpawnController : MonoBehaviour
 	{
 		PlaySpawnSound();
 
-		GameController.Instance.nextWaveButton.SetActive(false);
+		GameController.Instance.waveLine.HideLine();
+		GameController.Instance.battleUI.nextWaveButton.SetActive(false);
 		waves = GameController.Instance.waves;
 
 		if (GameController.Instance.actualWaveIndex >= waves.Count)
@@ -157,7 +158,8 @@ public class SpawnController : MonoBehaviour
 				else
 				{
 					GameController.Instance.actualWaveIndex++;
-					GameController.Instance.nextWaveButton.SetActive(true);
+					GameController.Instance.battleUI.nextWaveButton.SetActive(true);
+					GameController.Instance.waveLine.DisplayLine();
 				}
 			}
 		}

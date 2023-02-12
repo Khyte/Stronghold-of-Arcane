@@ -96,57 +96,16 @@ public class BuyingSystem : MonoBehaviour
 				selectedTower = hit.transform.GetComponentInParent<Towers>();
 				selectedTower.range.SetActive(true);
 
-				switch (selectedTower.actualUpgrade)
+				List<int> costs = new List<int>();
+
+				for (int i = 1 ; i < 4 ; i++)
 				{
-					case 1:
-						upgradesBtn[0].enabled = false;
-						upgradesBtn[1].enabled = true;
-						upgradesBtn[2].enabled = false;
-
-						locksBtn[0].SetActive(false);
-						locksBtn[1].SetActive(true);
-
-						okBtns[0].SetActive(true);
-						okBtns[1].SetActive(false);
-						okBtns[2].SetActive(false);
-						break;
-					case 2:
-						upgradesBtn[0].enabled = false;
-						upgradesBtn[1].enabled = false;
-						upgradesBtn[2].enabled = true;
-
-						locksBtn[0].SetActive(false);
-						locksBtn[1].SetActive(false);
-
-						okBtns[0].SetActive(true);
-						okBtns[1].SetActive(true);
-						okBtns[2].SetActive(false);
-						break;
-					case 3:
-						upgradesBtn[0].enabled = false;
-						upgradesBtn[1].enabled = false;
-						upgradesBtn[2].enabled = false;
-
-						locksBtn[0].SetActive(false);
-						locksBtn[1].SetActive(false);
-
-						okBtns[0].SetActive(true);
-						okBtns[1].SetActive(true);
-						okBtns[2].SetActive(true);
-						break;
-					default:
-						upgradesBtn[0].enabled = true;
-						upgradesBtn[1].enabled = false;
-						upgradesBtn[2].enabled = false;
-
-						locksBtn[0].SetActive(true);
-						locksBtn[1].SetActive(true);
-
-						okBtns[0].SetActive(false);
-						okBtns[1].SetActive(false);
-						okBtns[2].SetActive(false);
-						break;
+					int cost = selectedTower.data.costPerUpgrade * i;
+					costs.Add(cost);
 				}
+
+				GameController.Instance.battleUI.DisplayUpgradeCost(costs, selectedTower.data.cost);
+				DisplayUpgrade(selectedTower.actualUpgrade);
 
 				shopMenu.SetActive(false);
 				upgradeMenu.SetActive(true);
@@ -162,6 +121,61 @@ public class BuyingSystem : MonoBehaviour
 				selectedTower.range.SetActive(false);
 				selectedTower = null;
 			}
+		}
+	}
+
+	private void DisplayUpgrade(int upgradeIndex)
+	{
+		switch (upgradeIndex)
+		{
+			case 1:
+				upgradesBtn[0].enabled = false;
+				upgradesBtn[1].enabled = true;
+				upgradesBtn[2].enabled = false;
+
+				locksBtn[0].SetActive(false);
+				locksBtn[1].SetActive(true);
+
+				okBtns[0].SetActive(true);
+				okBtns[1].SetActive(false);
+				okBtns[2].SetActive(false);
+				break;
+			case 2:
+				upgradesBtn[0].enabled = false;
+				upgradesBtn[1].enabled = false;
+				upgradesBtn[2].enabled = true;
+
+				locksBtn[0].SetActive(false);
+				locksBtn[1].SetActive(false);
+
+				okBtns[0].SetActive(true);
+				okBtns[1].SetActive(true);
+				okBtns[2].SetActive(false);
+				break;
+			case 3:
+				upgradesBtn[0].enabled = false;
+				upgradesBtn[1].enabled = false;
+				upgradesBtn[2].enabled = false;
+
+				locksBtn[0].SetActive(false);
+				locksBtn[1].SetActive(false);
+
+				okBtns[0].SetActive(true);
+				okBtns[1].SetActive(true);
+				okBtns[2].SetActive(true);
+				break;
+			default:
+				upgradesBtn[0].enabled = true;
+				upgradesBtn[1].enabled = false;
+				upgradesBtn[2].enabled = false;
+
+				locksBtn[0].SetActive(true);
+				locksBtn[1].SetActive(true);
+
+				okBtns[0].SetActive(false);
+				okBtns[1].SetActive(false);
+				okBtns[2].SetActive(false);
+				break;
 		}
 	}
 
@@ -194,12 +208,16 @@ public class BuyingSystem : MonoBehaviour
 
 	public void UpgradeTower(int upgrade)
 	{
-		if (selectedTower.data.costPerUpgrade > GameController.Instance.money)
+		int cost = selectedTower.data.costPerUpgrade * upgrade;
+
+		if (cost > GameController.Instance.money)
 			return;
 
-		GameController.Instance.GetOrLoseMoney(-selectedTower.data.costPerUpgrade);
+		GameController.Instance.GetOrLoseMoney(-cost);
 
 		selectedTower.actualDamage = selectedTower.data.baseAttack + (selectedTower.data.attackModifier * upgrade);
 		selectedTower.actualUpgrade = upgrade;
+
+		DisplayUpgrade(upgrade);
 	}
 }

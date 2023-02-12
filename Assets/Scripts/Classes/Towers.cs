@@ -10,6 +10,8 @@ public class Towers : MonoBehaviour
 	private Projectiles projectilePrefab;
 	[SerializeField]
 	private Transform spawnProjectile;
+	[SerializeField]
+	private GameObject dotParticles;
 
 	public GameObject arcane;
 	public GameObject range;
@@ -26,6 +28,9 @@ public class Towers : MonoBehaviour
 
 	private void Start()
 	{
+		if (dotParticles != null)
+			dotParticles.SetActive(false);
+
 		InitializeTower();
 	}
 
@@ -51,6 +56,9 @@ public class Towers : MonoBehaviour
 	{
 		isShooting = true;
 		Shoot();
+
+		if (dotParticles != null)
+			dotParticles.SetActive(true);
 	}
 
 	private void Shoot()
@@ -90,7 +98,12 @@ public class Towers : MonoBehaviour
 		target = GetMostDangerousTarget();
 
 		if (target == null)
+		{
 			isShooting = false;
+
+			if (dotParticles != null)
+				dotParticles.SetActive(false);
+		}
 		else
 			Shoot();
 	}
