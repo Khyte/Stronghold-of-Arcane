@@ -13,7 +13,8 @@ public class Towers : MonoBehaviour
 	[SerializeField]
 	private GameObject dotParticles;
 
-	public GameObject arcane;
+	public Transform models;
+
 	public GameObject range;
 
 	public Ennemies target;

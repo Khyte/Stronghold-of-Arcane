@@ -15,12 +15,12 @@ MonoBehaviour:
   id: 1
   towerName: FireTower
   prefab: {fileID: 453696109908987505, guid: 539ee10a51d7c4e4f9e6f1b10c4374d5, type: 3}
-  baseAttack: 0.5
+  baseAttack: 0.6
   attackModifier: 0.3
   attackSpeed: 0.4
   range: 5
-  cost: 12
-  costPerUpgrade: 6
-  forceOfProjectile: 600
-  timeDisableProjectile: 1
+  cost: 15
+  costPerUpgrade: 8
+  forceOfProjectile: 1000
+  timeDisableProjectile: 0.8
   isDotTower: 0

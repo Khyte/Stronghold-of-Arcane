@@ -15,12 +15,12 @@ MonoBehaviour:
   id: 5
   towerName: IceTower
   prefab: {fileID: 8531208638965427925, guid: 462e2cb5b05317948b90a38d07958755, type: 3}
-  baseAttack: 10
-  attackModifier: 5
-  attackSpeed: 5
-  range: 600
-  cost: 30
-  costPerUpgrade: 15
-  forceOfProjectile: 800
+  baseAttack: 12
+  attackModifier: 10
+  attackSpeed: 4
+  range: 10
+  cost: 40
+  costPerUpgrade: 20
+  forceOfProjectile: 1000
   timeDisableProjectile: 3
   isDotTower: 0

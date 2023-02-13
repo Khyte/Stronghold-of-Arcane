@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class Data
 {
+	public string version;
 	public int savedWorlds;
 	public float volume = 1f;
 }

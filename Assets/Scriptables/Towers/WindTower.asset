@@ -15,12 +15,12 @@ MonoBehaviour:
   id: 4
   towerName: WindTower
   prefab: {fileID: 8753667432966857127, guid: d92d592b29c4813428b9c42740936599, type: 3}
-  baseAttack: 4
-  attackModifier: 2
-  attackSpeed: 2
-  range: 800
-  cost: 25
-  costPerUpgrade: 12
-  forceOfProjectile: 200
+  baseAttack: 2
+  attackModifier: 1
+  attackSpeed: 0.5
+  range: 6
+  cost: 30
+  costPerUpgrade: 15
+  forceOfProjectile: 600
   timeDisableProjectile: 2
   isDotTower: 0

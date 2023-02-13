@@ -9744,10 +9744,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3497221510951082397}
-  - component: {fileID: 3497221510951082398}
   - component: {fileID: 3497221510951082385}
   - component: {fileID: 3497221510951082394}
   - component: {fileID: 7656744548242152730}
+  - component: {fileID: 3746643935094423578}
   m_Layer: 0
   m_Name: BlobThunder
   m_TagString: Ennemy
@@ -9771,19 +9771,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!65 &3497221510951082398
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3497221510951082384}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 2, y: 1, z: 1.5}
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!195 &3497221510951082385
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -9839,6 +9826,19 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!135 &3746643935094423578
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3497221510951082384}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 1
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &5920152100162127473
 GameObject:
   m_ObjectHideFlags: 0
@@ -9930,6 +9930,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6240556203112806194, guid: 69684f5d47639494da9bafd7c82b201b, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 57215125a0b45354a8bc60d735d77dc1, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 69684f5d47639494da9bafd7c82b201b, type: 3}
 --- !u!4 &4324061916839609313 stripped
@@ -9958,7 +9962,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9205984579705725310, guid: 9e7cd798d098c1343a561a1b3f06ff84, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: -0.5
       objectReference: {fileID: 0}
     - target: {fileID: 9205984579705725310, guid: 9e7cd798d098c1343a561a1b3f06ff84, type: 3}
       propertyPath: m_LocalPosition.z

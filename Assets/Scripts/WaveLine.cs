@@ -39,15 +39,16 @@ public class WaveLine : MonoBehaviour
 
 		for (int i = 0 ; i < corners.Length ; i++)
 		{
-			corners[i] = new Vector3(corners[i].x, corners[i].y + 0.4f, corners[i].z);
+			corners[i] = new Vector3(corners[i].x, corners[i].y + 0.2f, corners[i].z);
 
 			if (i < corners.Length - 1)
 				distance += Vector3.Distance(corners[i], corners[i + 1]);
 		}
 
-		LineRenderer line = Instantiate(linePrefab);
+		LineRenderer line = Instantiate(linePrefab, transform);
 		line.material.mainTextureScale = new Vector2(distance * 0.2f, 1);
 		line.positionCount = corners.Length;
+		line.numCapVertices = 5;
 		line.SetPositions(corners);
 
 		lines.Add(line);

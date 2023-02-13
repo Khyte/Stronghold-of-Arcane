@@ -15,12 +15,12 @@ MonoBehaviour:
   id: 0
   towerName: RockTower
   prefab: {fileID: 1648433462891332468, guid: 8f1109ccb7c4747428c44c0faff8dcfd, type: 3}
-  baseAttack: 5
+  baseAttack: 4
   attackModifier: 2
   attackSpeed: 3
-  range: 6
+  range: 7
   cost: 10
-  costPerUpgrade: 5
-  forceOfProjectile: 500
+  costPerUpgrade: 6
+  forceOfProjectile: 600
   timeDisableProjectile: 3
   isDotTower: 0

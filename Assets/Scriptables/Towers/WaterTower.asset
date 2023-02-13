@@ -15,12 +15,12 @@ MonoBehaviour:
   id: 3
   towerName: WaterTower
   prefab: {fileID: 4388488743785188691, guid: f412a5b08f4893c49a5a24022ad646e8, type: 3}
-  baseAttack: 2
-  attackModifier: 1
+  baseAttack: 4
+  attackModifier: 2
   attackSpeed: 1
-  range: 5
-  cost: 20
-  costPerUpgrade: 10
-  forceOfProjectile: 400
-  timeDisableProjectile: 1
+  range: 8
+  cost: 25
+  costPerUpgrade: 14
+  forceOfProjectile: 800
+  timeDisableProjectile: 3
   isDotTower: 0

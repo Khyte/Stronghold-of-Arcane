@@ -22,16 +22,14 @@ public class BuyingSystem : MonoBehaviour
 
 	private Camera mainCam;
 	private LayerMask selectableLayer;
-	private LayerMask uiLayer;
 
-	private GameObject selectedArcane;
+	private Arcanes selectedArcane;
 	private Towers selectedTower;
 
 	private void Awake()
 	{
 		mainCam = Camera.main;
 		selectableLayer = LayerMask.GetMask("SelectableObjects");
-		uiLayer = LayerMask.GetMask("UI");
 
 		shopMenu.SetActive(false);
 		upgradeMenu.SetActive(false);
@@ -84,37 +82,50 @@ public class BuyingSystem : MonoBehaviour
 		{
 			if (hit.transform.tag == "Arcane")
 			{
-				selectedArcane = hit.transform.gameObject;
-				shopMenu.SetActive(true);
-				upgradeMenu.SetActive(false);
-			}
-			else if (hit.transform.tag == "Tower")
-			{
+				Arcanes arcane = hit.transform.GetComponent<Arcanes>();
+
+				if (selectedArcane != null && selectedArcane == arcane)
+					return;
+
+				selectedArcane = arcane;
+
 				if (selectedTower != null)
 					selectedTower.range.SetActive(false);
 
-				selectedTower = hit.transform.GetComponentInParent<Towers>();
-				selectedTower.range.SetActive(true);
+				selectedTower = null;
 
-				List<int> costs = new List<int>();
-
-				for (int i = 1 ; i < 4 ; i++)
+				if (arcane.actualTower != null)
 				{
-					int cost = selectedTower.data.costPerUpgrade * i;
-					costs.Add(cost);
+					selectedTower = arcane.actualTower;
+					selectedTower.range.SetActive(true);
+
+					List<int> costs = new List<int>();
+
+					for (int i = 1 ; i < 4 ; i++)
+					{
+						int cost = selectedTower.data.costPerUpgrade * i;
+						costs.Add(cost);
+					}
+
+					GameController.Instance.battleUI.DisplayUpgradeCost(costs, selectedTower.data.cost);
+					DisplayUpgrade(selectedTower.actualUpgrade);
+
+					shopMenu.SetActive(false);
+					upgradeMenu.SetActive(true);
 				}
-
-				GameController.Instance.battleUI.DisplayUpgradeCost(costs, selectedTower.data.cost);
-				DisplayUpgrade(selectedTower.actualUpgrade);
-
-				shopMenu.SetActive(false);
-				upgradeMenu.SetActive(true);
+				else
+				{
+					shopMenu.SetActive(true);
+					upgradeMenu.SetActive(false);
+				}
 			}
 		}
 		else
 		{
 			shopMenu.SetActive(false);
 			upgradeMenu.SetActive(false);
+
+			selectedArcane = null;
 
 			if (selectedTower != null)
 			{
@@ -188,9 +199,23 @@ public class BuyingSystem : MonoBehaviour
 
 		GameObject newTower = Instantiate(tower.prefab, selectedArcane.transform.position - selectedArcane.transform.up * 0.5f, Quaternion.identity, selectedArcane.transform);
 		Towers compTower = newTower.GetComponent<Towers>();
-		compTower.arcane = selectedArcane;
-		selectedArcane.GetComponent<Collider>().enabled = false;
+		selectedTower = compTower;
+		selectedTower.range.SetActive(true);
+		selectedArcane.actualTower = compTower;
+
+		List<int> costs = new List<int>();
+
+		for (int i = 1 ; i < 4 ; i++)
+		{
+			int cost = selectedTower.data.costPerUpgrade * i;
+			costs.Add(cost);
+		}
+
+		GameController.Instance.battleUI.DisplayUpgradeCost(costs, selectedTower.data.cost);
+		DisplayUpgrade(selectedTower.actualUpgrade);
+
 		shopMenu.SetActive(false);
+		upgradeMenu.SetActive(true);
 
 		GameController.Instance.towers.Add(compTower);
 	}
@@ -199,10 +224,11 @@ public class BuyingSystem : MonoBehaviour
 	{
 		GameController.Instance.GetOrLoseMoney(selectedTower.data.cost);
 		GameController.Instance.towers.Remove(selectedTower);
-		selectedTower.arcane.GetComponent<CapsuleCollider>().enabled = true;
+		selectedArcane.actualTower = null;
 
 		Destroy(selectedTower.gameObject);
-		
+
+		shopMenu.SetActive(true);
 		upgradeMenu.SetActive(false);
 	}
 
@@ -217,6 +243,9 @@ public class BuyingSystem : MonoBehaviour
 
 		selectedTower.actualDamage = selectedTower.data.baseAttack + (selectedTower.data.attackModifier * upgrade);
 		selectedTower.actualUpgrade = upgrade;
+
+		selectedTower.models.GetChild(upgrade - 1).gameObject.SetActive(false);
+		selectedTower.models.GetChild(upgrade).gameObject.SetActive(true);
 
 		DisplayUpgrade(upgrade);
 	}

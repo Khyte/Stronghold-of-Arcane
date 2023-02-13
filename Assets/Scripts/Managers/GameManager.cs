@@ -2,6 +2,8 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
@@ -97,6 +99,20 @@ public class GameManager : MonoBehaviour
 				fadeSource.volume -= Time.deltaTime * 0.5f;
 			}
 		}
+	}
+
+	public IEnumerator LoadLevel(string sceneName, GameObject loadingScreen, Image loadingProgress)
+	{
+		loadingScreen.SetActive(true);
+		AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(sceneName);
+
+		while (!asyncLoad.isDone)
+		{
+			loadingProgress.fillAmount = asyncLoad.progress;
+			yield return null;
+		}
+
+		StopMusic();
 	}
 
 	public void Quit()

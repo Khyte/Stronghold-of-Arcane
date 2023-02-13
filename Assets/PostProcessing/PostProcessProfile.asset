@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c1cb7e9e120078f43bce4f0b1be547a7, type: 3}
   m_Name: AmbientOcclusion
   m_EditorClassIdentifier: 
-  active: 1
+  active: 0
   enabled:
     overrideState: 1
     value: 0
@@ -67,7 +67,7 @@ MonoBehaviour:
     value: 1
   focusDistance:
     overrideState: 1
-    value: 3
+    value: 3.5
   aperture:
     overrideState: 1
     value: 4
@@ -76,7 +76,7 @@ MonoBehaviour:
     value: 40
   kernelSize:
     overrideState: 1
-    value: 1
+    value: 0
 --- !u!114 &-2176700231985122305
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -95,7 +95,7 @@ MonoBehaviour:
     value: 1
   gradingMode:
     overrideState: 1
-    value: 1
+    value: 0
   externalLut:
     overrideState: 1
     value: {fileID: 0}
@@ -130,10 +130,10 @@ MonoBehaviour:
     value: 1
   temperature:
     overrideState: 1
-    value: 5
+    value: 10
   tint:
     overrideState: 1
-    value: -5
+    value: -10
   colorFilter:
     overrideState: 1
     value: {r: 1, g: 1, b: 1, a: 1}
@@ -142,19 +142,19 @@ MonoBehaviour:
     value: 0
   saturation:
     overrideState: 1
-    value: 6
+    value: 25
   brightness:
     overrideState: 1
-    value: 0
+    value: 20
   postExposure:
     overrideState: 1
     value: 1.1
   contrast:
     overrideState: 1
-    value: 6
+    value: 12
   mixerRedOutRedIn:
     overrideState: 1
-    value: 100
+    value: 120
   mixerRedOutGreenIn:
     overrideState: 1
     value: 0
@@ -1440,15 +1440,15 @@ MonoBehaviour:
     overrideState: 1
     value: 0
   color:
-    overrideState: 1
+    overrideState: 0
     value: {r: 1, g: 1, b: 1, a: 1}
   fastMode:
     overrideState: 1
     value: 1
   dirtTexture:
-    overrideState: 1
+    overrideState: 0
     value: {fileID: 0}
     defaultState: 1
   dirtIntensity:
-    overrideState: 1
+    overrideState: 0
     value: 0

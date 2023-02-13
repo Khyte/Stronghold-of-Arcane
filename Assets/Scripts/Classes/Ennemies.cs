@@ -41,6 +41,9 @@ public class Ennemies : MonoBehaviour
 
 	public void TakeDamage(Projectiles projectile)
 	{
+		if (actualHP <= 0)
+			return;
+
 		actualHP -= projectile.damage;
 
 		if (actualHP <= 0)
@@ -60,7 +63,7 @@ public class Ennemies : MonoBehaviour
 	{
 		if (other.tag == "End")
 		{
-			GameController.Instance.TakeDamage();
+			GameController.Instance.LoseLife(transform.position);
 			gameObject.SetActive(false);
 			OnEnnemyDie?.Invoke(this);
 		}

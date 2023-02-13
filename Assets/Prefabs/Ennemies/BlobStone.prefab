@@ -40,10 +40,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8235101628787455256}
-  - component: {fileID: 8235101628787455259}
   - component: {fileID: 8235101628787455252}
   - component: {fileID: 8235101628787455263}
   - component: {fileID: 2919016157776458143}
+  - component: {fileID: 7620141059218349588}
   m_Layer: 0
   m_Name: BlobStone
   m_TagString: Ennemy
@@ -67,19 +67,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!65 &8235101628787455259
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8235101628787455253}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 2, y: 1, z: 1.5}
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!195 &8235101628787455252
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -135,6 +122,19 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!135 &7620141059218349588
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8235101628787455253}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 1
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1001 &3668814469076977821
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -156,7 +156,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9205984579705725310, guid: 9e7cd798d098c1343a561a1b3f06ff84, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: -0.5
       objectReference: {fileID: 0}
     - target: {fileID: 9205984579705725310, guid: 9e7cd798d098c1343a561a1b3f06ff84, type: 3}
       propertyPath: m_LocalPosition.z
@@ -261,6 +261,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6240556203112806194, guid: 69684f5d47639494da9bafd7c82b201b, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 06866f58c21e48c42973a24470db4463, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 69684f5d47639494da9bafd7c82b201b, type: 3}
 --- !u!4 &301523633892422379 stripped

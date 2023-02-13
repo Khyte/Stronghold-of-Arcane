@@ -9,10 +9,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2758694770740429206}
-  - component: {fileID: 2758694770740429205}
   - component: {fileID: 2758694770740429210}
   - component: {fileID: 2758694770740429201}
   - component: {fileID: 8971806735875425553}
+  - component: {fileID: 3247888017158839056}
   m_Layer: 0
   m_Name: Slime
   m_TagString: Ennemy
@@ -36,19 +36,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!65 &2758694770740429205
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2758694770740429211}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 2, y: 1, z: 1.5}
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!195 &2758694770740429210
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -104,6 +91,19 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!135 &3247888017158839056
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2758694770740429211}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 1
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &7732413126208377831
 GameObject:
   m_ObjectHideFlags: 0
@@ -146,6 +146,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Enemy Explosion
       objectReference: {fileID: 0}
+    - target: {fileID: 9205984579705725297, guid: 9e7cd798d098c1343a561a1b3f06ff84, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 9205984579705725310, guid: 9e7cd798d098c1343a561a1b3f06ff84, type: 3}
       propertyPath: m_RootOrder
       value: 1
@@ -156,7 +160,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9205984579705725310, guid: 9e7cd798d098c1343a561a1b3f06ff84, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: -0.5
       objectReference: {fileID: 0}
     - target: {fileID: 9205984579705725310, guid: 9e7cd798d098c1343a561a1b3f06ff84, type: 3}
       propertyPath: m_LocalPosition.z

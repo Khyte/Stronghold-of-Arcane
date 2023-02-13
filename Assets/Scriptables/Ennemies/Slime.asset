@@ -16,8 +16,8 @@ MonoBehaviour:
   ennemyName: Slime
   prefab: {fileID: 2758694770740429211, guid: 23d47ae23050f7d49b4fa295a7ee51b1, type: 3}
   baseHP: 10
-  hpModifier: 0.5
+  hpModifier: 1
   maxHP: 10
   actualHP: 10
-  speed: 0.5
-  moneyDrop: 3
+  speed: 0.8
+  moneyDrop: 2

@@ -32,6 +32,9 @@ public class GameController : MonoBehaviour
 	private GameObject endPrefab;
 
 	[SerializeField]
+	private ParticleSystem brokenHeartPrefab;
+
+	[SerializeField]
 	private AudioClip introMusic;
 	[SerializeField]
 	private List<AudioClip> battleMusics;
@@ -100,13 +103,24 @@ public class GameController : MonoBehaviour
 		}
 	}
 
-	public void TakeDamage()
+	public void LoseLife(Vector3 position)
 	{
 		life--;
 		battleUI.lifeText.text = life.ToString();
 
+		brokenHeartPrefab.transform.position = position + Vector3.up * 2f;
+		brokenHeartPrefab.gameObject.SetActive(true);
+		brokenHeartPrefab.Play();
+
+		Invoke(nameof(HideHeart), 2f);
+
 		if (life <= 0)
 			Lose();
+	}
+
+	private void HideHeart()
+	{
+		brokenHeartPrefab.gameObject.SetActive(false);
 	}
 
 	public void GetOrLoseMoney(int value)
@@ -152,17 +166,25 @@ public class GameController : MonoBehaviour
 
 	public void Retry()
 	{
-		SceneManager.LoadScene("BattleScene");
+		StartCoroutine(GameManager.Instance.LoadLevel("BattleScene", battleUI.loadingScreen, battleUI.loadingProgress));
 	}
 
 	public void Menu()
 	{
-		SceneManager.LoadScene("MainMenu");
+		StartCoroutine(GameManager.Instance.LoadLevel("MainMenu", battleUI.loadingScreen, battleUI.loadingProgress));
 	}
 
 	public void Quit()
 	{
 		Application.Quit();
+	}
+
+	public void PauseUnpauseGame(bool isPausing)
+	{
+		if (isPausing)
+			Time.timeScale = 0;
+		else
+			Time.timeScale = 1;
 	}
 }
 

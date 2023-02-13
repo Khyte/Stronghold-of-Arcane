@@ -27,6 +27,11 @@ public class MainMenu : MonoBehaviour
 	[SerializeField]
 	private Slider volumeSlider;
 
+	[SerializeField]
+	private GameObject loadingScene;
+	[SerializeField]
+	private Image loadingProgress;
+
 	// A SUPPRIMER
 	[SerializeField]
 	private Animator disclaimAnim;
@@ -97,8 +102,7 @@ public class MainMenu : MonoBehaviour
 
 	public void LoadBattleScene(int levelIndex)
 	{
-		GameManager.Instance.StopMusic();
 		DataManager.Instance.actualLevel = DataManager.Instance.allLevels[levelIndex];
-		SceneManager.LoadScene("BattleScene");
+		StartCoroutine(GameManager.Instance.LoadLevel("BattleScene", loadingScene, loadingProgress));
 	}
 }

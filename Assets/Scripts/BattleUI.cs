@@ -16,6 +16,9 @@ public class BattleUI : MonoBehaviour
 	public TextMeshProUGUI waveText;
 	public Image waveCompletion;
 
+	public GameObject loadingScreen;
+	public Image loadingProgress;
+
 	[SerializeField]
 	private List<TextMeshProUGUI> shopCosts;
 	[SerializeField]

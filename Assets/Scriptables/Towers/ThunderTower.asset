@@ -15,12 +15,12 @@ MonoBehaviour:
   id: 2
   towerName: ThunderTower
   prefab: {fileID: 8346040505297641871, guid: 578fbfb7bf62e27479669f05a18c466a, type: 3}
-  baseAttack: 6
-  attackModifier: 4
-  attackSpeed: 4
-  range: 10
-  cost: 15
-  costPerUpgrade: 7
-  forceOfProjectile: 500
-  timeDisableProjectile: 3
+  baseAttack: 1
+  attackModifier: 0.5
+  attackSpeed: 0.5
+  range: 6
+  cost: 20
+  costPerUpgrade: 10
+  forceOfProjectile: 600
+  timeDisableProjectile: 1
   isDotTower: 0
