@@ -1,23 +1,34 @@
-using System;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Data class, contain all saved data on devices
+/// </summary>
 public class Data
 {
 	public string version;
 	public int savedWorlds;
-	public float volume = 1f;
+	public float volume;
+
+	public void InitializeData()
+	{
+		version = Application.version;
+		savedWorlds = 0;
+		volume = 1f;
+	}
 }
 
+/// <summary>
+/// Manager of the data of the game
+/// </summary>
 public class DataManager : MonoBehaviour
 {
 	public static DataManager Instance;
 
+	public Data Data;
+
 	public List<LevelsData> allLevels;
 	public LevelsData actualLevel;
-
-	public Data Data;
 
 	private void Awake()
 	{
@@ -29,59 +40,50 @@ public class DataManager : MonoBehaviour
 		else
 			Instance = this;
 
-		LoadAndSaveData.LoadFirstTime();
+		Data = LoadAndSaveData.LoadData(Data);
+
+		if (Data == null)
+		{
+			Data = new Data();
+			Data.InitializeData();
+		}
+		else if (Application.version != Data.version)
+		{
+			Data.version = Application.version;
+			LoadAndSaveData.SaveData(Data);
+		}
 	}
 
-	private void Start()
-	{
-		AudioListener.volume = Data.volume;
-	}
-
+#if UNITY_EDITOR
 	private void Update()
 	{
 		if (Input.GetKeyDown(KeyCode.Alpha0))
-			SaveData(0);
+			CheatSaveLevel(0);
 		if (Input.GetKeyDown(KeyCode.Alpha1))
-			SaveData(1);
+			CheatSaveLevel(1);
 		if (Input.GetKeyDown(KeyCode.Alpha2))
-			SaveData(2);
+			CheatSaveLevel(2);
 		if (Input.GetKeyDown(KeyCode.Alpha3))
-			SaveData(3);
+			CheatSaveLevel(3);
 		if (Input.GetKeyDown(KeyCode.Alpha4))
-			SaveData(4);
+			CheatSaveLevel(4);
 		if (Input.GetKeyDown(KeyCode.Alpha5))
-			SaveData(5);
+			CheatSaveLevel(5);
 		if (Input.GetKeyDown(KeyCode.Alpha6))
-			SaveData(6);
+			CheatSaveLevel(6);
 		if (Input.GetKeyDown(KeyCode.Alpha7))
-			SaveData(7);
+			CheatSaveLevel(7);
 		if (Input.GetKeyDown(KeyCode.Alpha8))
-			SaveData(8);
+			CheatSaveLevel(8);
 	}
 
-	public void SaveData(int world = -1, float volume = -1)
+	/// <summary>
+	/// Only in Unity Editor : save a specify level progression
+	/// </summary>
+	private void CheatSaveLevel(int levelIndex)
 	{
-		if (world != -1)
-			Data.savedWorlds = world;
-
-		if (volume >= 0 && volume <= 1)
-			Data.volume = volume;
-
-		LoadAndSaveData.SaveData();
+		Data.savedWorlds = levelIndex;
+		LoadAndSaveData.SaveData(Data);
 	}
-
-	public float Remap(float from, float fromMin, float fromMax, float toMin, float toMax)
-	{
-		var fromAbs = from - fromMin;
-		var fromMaxAbs = fromMax - fromMin;
-
-		var normal = fromAbs / fromMaxAbs;
-
-		var toMaxAbs = toMax - toMin;
-		var toAbs = toMaxAbs * normal;
-
-		var to = toAbs + toMin;
-
-		return to;
-	}
+#endif
 }

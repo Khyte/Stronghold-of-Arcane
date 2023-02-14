@@ -55,17 +55,11 @@ public class GameController : MonoBehaviour
 
 	private void Start()
 	{
-		PlayBattleMusic();
+		GameManager.Instance.AudioController.StartPlayMusic(battleMusics);
 		CreateWorld();
 
 		money = actualLevel.initialMoney;
 		battleUI.InitUI(money);
-	}
-
-	public void PlayBattleMusic()
-	{
-		GameManager.Instance.musics = battleMusics;
-		StartCoroutine(GameManager.Instance.PlayMusic());
 	}
 
 	private void CreateWorld()
@@ -131,7 +125,7 @@ public class GameController : MonoBehaviour
 
 	public void WaveCompletion(int value, int fromMax)
 	{
-		battleUI.waveCompletion.fillAmount = DataManager.Instance.Remap(value, 0, fromMax, 0, 1);
+		battleUI.waveCompletion.fillAmount = GameManager.Instance.Remap(value, 0, fromMax, 0, 1);
 	}
 
 	public void ActualWaveDisplay(int waveIndex)
@@ -146,7 +140,10 @@ public class GameController : MonoBehaviour
 			battleUI.winMenu.SetActive(true);
 
 			if (actualLevel.levelId + 1 > DataManager.Instance.Data.savedWorlds && actualLevel.levelId + 1 < 8)
-				DataManager.Instance.SaveData(actualLevel.levelId + 1);
+			{
+				DataManager.Instance.Data.savedWorlds = actualLevel.levelId + 1;
+				LoadAndSaveData.SaveData(DataManager.Instance.Data);
+			}
 		}
 	}
 

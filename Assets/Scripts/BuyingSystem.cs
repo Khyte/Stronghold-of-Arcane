@@ -216,6 +216,7 @@ public class BuyingSystem : MonoBehaviour
 
 		shopMenu.SetActive(false);
 		upgradeMenu.SetActive(true);
+		compTower.range.SetActive(true);
 
 		GameController.Instance.towers.Add(compTower);
 	}

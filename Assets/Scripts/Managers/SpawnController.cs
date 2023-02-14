@@ -67,7 +67,7 @@ public class SpawnController : MonoBehaviour
 	{
 		float startTime = Random.Range(0, spawnSound.length - 20);
 		source.time = startTime;
-		GameManager.Instance.StartFadeVolume(source, true);
+		GameManager.Instance.AudioController.StartFadeVolume(source, true);
 		source.Play();
 		source.SetScheduledEndTime(AudioSettings.dspTime + 5f);
 
@@ -76,7 +76,7 @@ public class SpawnController : MonoBehaviour
 
 	private void FadeDown()
 	{
-		GameManager.Instance.StartFadeVolume(source);
+		GameManager.Instance.AudioController.StartFadeVolume(source);
 	}
 
 	private void LaunchWave()

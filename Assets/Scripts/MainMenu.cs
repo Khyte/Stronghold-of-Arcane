@@ -47,8 +47,7 @@ public class MainMenu : MonoBehaviour
 
 	private void Start()
 	{
-		GameManager.Instance.musics = menuMusics;
-		StartCoroutine(GameManager.Instance.PlayMusic());
+		GameManager.Instance.AudioController.StartPlayMusic(menuMusics);
 
 		UnlockedLevel();
 		InitializeOptions();
@@ -97,7 +96,7 @@ public class MainMenu : MonoBehaviour
 	{
 		AudioListener.volume = value;
 		DataManager.Instance.Data.volume = value;
-		DataManager.Instance.SaveData(-1, value);
+		LoadAndSaveData.SaveData(DataManager.Instance.Data);
 	}
 
 	public void LoadBattleScene(int levelIndex)

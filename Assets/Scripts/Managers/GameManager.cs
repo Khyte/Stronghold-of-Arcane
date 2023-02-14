@@ -1,21 +1,16 @@
-using System;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
+/// <summary>
+/// Manager of the game, where all scripts can get essential functions
+/// </summary>
 public class GameManager : MonoBehaviour
 {
 	public static GameManager Instance;
 
-	public AudioSource audioSource;
-	public List<AudioClip> musics = new List<AudioClip>();
-	public event Action OnMusicEnded;
-
-	private AudioSource fadeSource;
-	private bool isFadeUp;
-	private bool isFadingVolume;
+	public AudioController AudioController;
 
 	private void Awake()
 	{
@@ -30,77 +25,13 @@ public class GameManager : MonoBehaviour
 		DontDestroyOnLoad(gameObject);
 	}
 
-	private void Update()
-	{
-		if (isFadingVolume)
-			FadeVolume();
-	}
-
-	public IEnumerator PlayMusic(bool isLoop = false)
-	{
-		if (musics.Count > 0)
-		{
-			int musicIndex = UnityEngine.Random.Range(0, musics.Count);
-			audioSource.clip = musics[musicIndex];
-			audioSource.Play();
-
-			yield return new WaitForSeconds(musics[musicIndex].length + 1f);
-
-			if (musics.Count > 1 || isLoop)
-				StartCoroutine(PlayMusic(isLoop));
-			else
-				OnMusicEnded?.Invoke();
-		}
-	}
-
-	public void StopMusic()
-	{
-		CancelInvoke();
-		musics.Clear();
-		audioSource.Stop();
-	}
-
-	public void StartFadeVolume(AudioSource source, bool isFadeUp = false)
-	{
-		if (isFadeUp)
-			source.volume = 0f;
-		else
-			source.volume = 1f;
-
-		fadeSource = source;
-		isFadingVolume = true;
-		this.isFadeUp = isFadeUp;
-	}
-
-	private void FadeVolume()
-	{
-		if (fadeSource != null)
-		{
-			if (isFadeUp)
-			{
-				if (fadeSource.volume >= 1f)
-				{
-					isFadingVolume = false;
-					fadeSource = null;
-					return;
-				}
-
-				fadeSource.volume += Time.deltaTime * 0.5f;
-			}
-			else
-			{
-				if (fadeSource.volume <= 0f)
-				{
-					isFadingVolume = false;
-					fadeSource = null;
-					return;
-				}
-
-				fadeSource.volume -= Time.deltaTime * 0.5f;
-			}
-		}
-	}
-
+	/// <summary>
+	/// Complete a scene loading with a loading screen
+	/// </summary>
+	/// <param name="sceneName">The scene to load</param>
+	/// <param name="loadingScreen">The loading screen</param>
+	/// <param name="loadingProgress">The image to show the progress of the loading</param>
+	/// <returns></returns>
 	public IEnumerator LoadLevel(string sceneName, GameObject loadingScreen, Image loadingProgress)
 	{
 		loadingScreen.SetActive(true);
@@ -112,9 +43,36 @@ public class GameManager : MonoBehaviour
 			yield return null;
 		}
 
-		StopMusic();
+		AudioController.StopMusic();
 	}
 
+	/// <summary>
+	/// Remap a value in an other range of floats
+	/// </summary>
+	/// <param name="from">Value to remap</param>
+	/// <param name="fromMin">Minimum of the value to remap</param>
+	/// <param name="fromMax">Maximum of the value to remap</param>
+	/// <param name="toMin">New minimum value</param>
+	/// <param name="toMax">New maximum value</param>
+	/// <returns>The new remaped value</returns>
+	public float Remap(float from, float fromMin, float fromMax, float toMin, float toMax)
+	{
+		var fromAbs = from - fromMin;
+		var fromMaxAbs = fromMax - fromMin;
+
+		var normal = fromAbs / fromMaxAbs;
+
+		var toMaxAbs = toMax - toMin;
+		var toAbs = toMaxAbs * normal;
+
+		var to = toAbs + toMin;
+
+		return to;
+	}
+
+	/// <summary>
+	/// Quit the game
+	/// </summary>
 	public void Quit()
 	{
 		Application.Quit();
