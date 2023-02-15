@@ -14,7 +14,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 3
   towerName: WaterTower
-  prefab: {fileID: 4388488743785188691, guid: f412a5b08f4893c49a5a24022ad646e8, type: 3}
+  prefab: {fileID: 2683329161875861639, guid: 0e606f1741cf7cf42a5b4dbdfcd6fec9, type: 3}
+  projectile: {fileID: 8281139019384797997, guid: 6c4e7f38ce2871740a208b97722cad87, type: 3}
+  dotParticles: {fileID: 0}
+  towerModels:
+  - {fileID: 7856808116066658428, guid: 947afa7b41614624aa3f5ce52f26ba07, type: 3}
+  - {fileID: 6960618478558833457, guid: b298827406083bf4382909beaeb4867e, type: 3}
+  - {fileID: 1984459865890759483, guid: 11ec47652a9c5814ba710fb8f6bf89ea, type: 3}
+  - {fileID: 8353228995285141469, guid: d899c9923fc8ade4198170aa1e23238e, type: 3}
   baseAttack: 4
   attackModifier: 2
   attackSpeed: 1

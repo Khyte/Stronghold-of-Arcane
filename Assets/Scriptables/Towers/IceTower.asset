@@ -14,7 +14,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 5
   towerName: IceTower
-  prefab: {fileID: 8531208638965427925, guid: 462e2cb5b05317948b90a38d07958755, type: 3}
+  prefab: {fileID: 2683329161875861639, guid: 0e606f1741cf7cf42a5b4dbdfcd6fec9, type: 3}
+  projectile: {fileID: -6882721739056778237, guid: 6942bc2b5f278ac42bd364904747c060, type: 3}
+  dotParticles: {fileID: 0}
+  towerModels:
+  - {fileID: 9082200606445102003, guid: 9f8f37f88684bc24493e8366fc881edb, type: 3}
+  - {fileID: 2018408913041503583, guid: ee350193e9bbb8a48988be95e2ef3ed0, type: 3}
+  - {fileID: 96292432753687325, guid: d0fbbc5f948adb44887682301de3c280, type: 3}
+  - {fileID: 403901859828185293, guid: 776e3eae9c9f72b4aa27fab869edafbf, type: 3}
   baseAttack: 12
   attackModifier: 10
   attackSpeed: 4

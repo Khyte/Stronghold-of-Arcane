@@ -14,7 +14,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 1
   towerName: FireTower
-  prefab: {fileID: 453696109908987505, guid: 539ee10a51d7c4e4f9e6f1b10c4374d5, type: 3}
+  prefab: {fileID: 2683329161875861639, guid: 0e606f1741cf7cf42a5b4dbdfcd6fec9, type: 3}
+  dotParticles: {fileID: 3542151001506183427, guid: 647c6ccd7ce63ab48ba99e11aa34770e, type: 3}
+  projectile: {fileID: 4241223404537191788, guid: 585728948781a574ca141c28b18f0ff0, type: 3}
+  towerModels:
+  - {fileID: 2824593388491557564, guid: 4a9e7863b7fdd6042a7c7ed83043603b, type: 3}
+  - {fileID: 8179843742254493607, guid: f4dfe979a1c3cef41a3c3a0356750d4f, type: 3}
+  - {fileID: 8759041359708812723, guid: 4f527f2eb0d9b3b4094d490fa460dc2b, type: 3}
+  - {fileID: 7500013052603502728, guid: 023addf14d6e74449bde1c47371b477a, type: 3}
   baseAttack: 0.6
   attackModifier: 0.3
   attackSpeed: 0.4

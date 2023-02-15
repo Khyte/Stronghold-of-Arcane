@@ -141,8 +141,7 @@ public class SpawnController : MonoBehaviour
 
 			for (int i = 0 ; i < GameController.Instance.towers.Count ; i++)
 			{
-				GameController.Instance.towers[i].target = null;
-				GameController.Instance.towers[i].availableTargets.Clear();
+				GameController.Instance.towers[i].ResetTargets();
 			}
 
 			GameController.Instance.Lose();

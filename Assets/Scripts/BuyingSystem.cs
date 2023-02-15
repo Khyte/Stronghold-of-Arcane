@@ -90,14 +90,14 @@ public class BuyingSystem : MonoBehaviour
 				selectedArcane = arcane;
 
 				if (selectedTower != null)
-					selectedTower.range.SetActive(false);
+					selectedTower.DisplayAttackRange(false);
 
 				selectedTower = null;
 
 				if (arcane.actualTower != null)
 				{
 					selectedTower = arcane.actualTower;
-					selectedTower.range.SetActive(true);
+					selectedTower.DisplayAttackRange(true);
 
 					List<int> costs = new List<int>();
 
@@ -129,7 +129,7 @@ public class BuyingSystem : MonoBehaviour
 
 			if (selectedTower != null)
 			{
-				selectedTower.range.SetActive(false);
+				selectedTower.DisplayAttackRange(false);
 				selectedTower = null;
 			}
 		}
@@ -190,18 +190,20 @@ public class BuyingSystem : MonoBehaviour
 		}
 	}
 
-	public void BuyTower(TowersData tower)
+	public void BuyTower(TowersData data)
 	{
-		if (tower.cost > GameController.Instance.money)
+		if (data.cost > GameController.Instance.money)
 			return;
 
-		GameController.Instance.GetOrLoseMoney(-tower.cost);
+		GameController.Instance.GetOrLoseMoney(-data.cost);
 
-		GameObject newTower = Instantiate(tower.prefab, selectedArcane.transform.position - selectedArcane.transform.up * 0.5f, Quaternion.identity, selectedArcane.transform);
-		Towers compTower = newTower.GetComponent<Towers>();
-		selectedTower = compTower;
-		selectedTower.range.SetActive(true);
-		selectedArcane.actualTower = compTower;
+		GameObject newTower = Instantiate(data.prefab, selectedArcane.transform.position - selectedArcane.transform.up * 0.5f, Quaternion.identity, selectedArcane.transform);
+		Towers tower = newTower.GetComponent<Towers>();
+		selectedTower = tower;
+		selectedTower.data = data;
+		selectedTower.InitializeTower();
+		selectedTower.DisplayAttackRange(true);
+		selectedArcane.actualTower = tower;
 
 		List<int> costs = new List<int>();
 
@@ -216,9 +218,8 @@ public class BuyingSystem : MonoBehaviour
 
 		shopMenu.SetActive(false);
 		upgradeMenu.SetActive(true);
-		compTower.range.SetActive(true);
 
-		GameController.Instance.towers.Add(compTower);
+		GameController.Instance.towers.Add(tower);
 	}
 
 	public void SellTower()
@@ -244,9 +245,7 @@ public class BuyingSystem : MonoBehaviour
 
 		selectedTower.actualDamage = selectedTower.data.baseAttack + (selectedTower.data.attackModifier * upgrade);
 		selectedTower.actualUpgrade = upgrade;
-
-		selectedTower.models.GetChild(upgrade - 1).gameObject.SetActive(false);
-		selectedTower.models.GetChild(upgrade).gameObject.SetActive(true);
+		selectedTower.DisplayTowerModels(upgrade);
 
 		DisplayUpgrade(upgrade);
 	}

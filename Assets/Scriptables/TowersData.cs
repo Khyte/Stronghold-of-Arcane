@@ -8,6 +8,10 @@ public class TowersData : ScriptableObject
 	public int id;
 	public string towerName;
 	public GameObject prefab;
+	public Projectiles projectile;
+	public GameObject dotParticles;	
+
+	public List<GameObject> towerModels;
 
 	public float baseAttack;
 	public float attackModifier;

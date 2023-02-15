@@ -6,46 +6,88 @@ public class Towers : MonoBehaviour
 {
 	public TowersData data;
 
+	public float actualDamage;
+	public int actualUpgrade;
+
 	[SerializeField]
-	private Projectiles projectilePrefab;
+	private Transform modelsParent;
 	[SerializeField]
 	private Transform spawnProjectile;
 	[SerializeField]
+	private GameObject range;
+	[SerializeField]
+	private CapsuleCollider capsCollider;
+
+	private Ennemies actualTarget;
+	private List<Ennemies> availableTargets = new List<Ennemies>();
+	private List<Projectiles> poolOfProjectiles = new List<Projectiles>();
+
+	private List<GameObject> listOfModels;
 	private GameObject dotParticles;
-
-	public Transform models;
-
-	public GameObject range;
-
-	public Ennemies target;
-	public List<Ennemies> availableTargets = new List<Ennemies>();
-
-	public List<Projectiles> poolOfProjectiles = new List<Projectiles>();
-
-	public float actualDamage;
-	public int actualUpgrade = 0;
-
 	private bool isShooting;
 
 	private void Start()
 	{
 		if (dotParticles != null)
 			dotParticles.SetActive(false);
-
-		InitializeTower();
 	}
 
-	private void InitializeTower()
+	public void InitializeTower()
 	{
-		GetComponent<CapsuleCollider>().radius = data.range;
+		listOfModels = new List<GameObject>();
+
+		for (int i = 0 ; i < data.towerModels.Count ; i++)
+		{
+			GameObject tower = Instantiate(data.towerModels[i], modelsParent);
+			listOfModels.Add(tower);
+
+			if (i == 0)
+				tower.SetActive(true);
+			else
+				tower.SetActive(false);
+		}
+
+		if (data.dotParticles != null)
+			dotParticles = Instantiate(data.dotParticles, spawnProjectile);
+
+		capsCollider.radius = data.range;
 		actualDamage = data.baseAttack;
 		range.transform.localScale *= data.range * 0.2f;
 		range.SetActive(false);
 	}
 
+	public void DisplayAttackRange(bool activateRange)
+	{
+		range.SetActive(activateRange);
+	}
+
+	public void DisplayTowerModels(int towerIndex)
+	{
+		if (towerIndex >= listOfModels.Count)
+			return;
+
+		for (int i = 0 ; i < listOfModels.Count ; i++)
+		{
+			if (towerIndex == i)
+				listOfModels[i].SetActive(true);
+			else
+				listOfModels[i].SetActive(false);
+		}
+	}
+
+	public void ResetTargets()
+	{
+		isShooting = false;
+		actualTarget = null;
+		availableTargets.Clear();
+
+		if (dotParticles != null)
+			dotParticles.SetActive(false);
+	}
+
 	private Projectiles CreateNewProjectile()
 	{
-		Projectiles projectile = Instantiate(projectilePrefab, transform);
+		Projectiles projectile = Instantiate(data.projectile, transform);
 		projectile.InitProjectile(actualDamage);
 		projectile.gameObject.SetActive(false);
 		poolOfProjectiles.Add(projectile);
@@ -78,7 +120,7 @@ public class Towers : MonoBehaviour
 		if (projectile == null)
 			projectile = CreateNewProjectile();
 
-		spawnProjectile.transform.LookAt(target.transform.position, Vector3.forward);
+		spawnProjectile.transform.LookAt(actualTarget.transform.position, Vector3.forward);
 
 		projectile.transform.position = spawnProjectile.position;
 		projectile.transform.rotation = spawnProjectile.transform.rotation;
@@ -93,12 +135,12 @@ public class Towers : MonoBehaviour
 	{
 		yield return new WaitForSeconds(data.attackSpeed);
 
-		if (target != null && target.actualHP <= 0)
-			availableTargets.Remove(target);
+		if (actualTarget != null && actualTarget.actualHP <= 0)
+			availableTargets.Remove(actualTarget);
 
-		target = GetMostDangerousTarget();
+		actualTarget = GetMostDangerousTarget();
 
-		if (target == null)
+		if (actualTarget == null)
 		{
 			isShooting = false;
 
@@ -148,11 +190,6 @@ public class Towers : MonoBehaviour
 			return null;
 	}
 
-	private void Dot()
-	{
-
-	}
-
 	private void OnTriggerEnter(Collider other)
 	{
 		if (other.tag == "Ennemy")
@@ -165,11 +202,11 @@ public class Towers : MonoBehaviour
 			availableTargets.Add(newTarget);
 
 			if (availableTargets.Count > 1)
-				target = GetMostDangerousTarget();
+				actualTarget = GetMostDangerousTarget();
 			else if (availableTargets.Count == 1)
-				target = newTarget;
+				actualTarget = newTarget;
 
-			if (!isShooting && target != null)
+			if (!isShooting && actualTarget != null)
 				Fire();
 		}
 	}
@@ -181,9 +218,9 @@ public class Towers : MonoBehaviour
 			Ennemies removedTarget = other.GetComponent<Ennemies>();
 			availableTargets.Remove(removedTarget);
 
-			target = GetMostDangerousTarget();
+			actualTarget = GetMostDangerousTarget();
 
-			if (!isShooting && target != null)
+			if (!isShooting && actualTarget != null)
 				Fire();
 		}
 	}
