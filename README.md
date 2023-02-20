@@ -1,4 +1,6 @@
 # Stronghold-of-Arcane
+
+![Alt text](Assets/Images/Arcane.jpg?raw=true "Title")
  
 This project contain some paid assets (sounds, musics, FX, and 3D placeholders). This repository do not contain those assets, and thus will not work if you want to test it on your computer.
 
