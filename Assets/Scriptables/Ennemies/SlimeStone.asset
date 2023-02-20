@@ -14,10 +14,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 2
   ennemyName: BlobStone
-  prefab: {fileID: 8235101628787455253, guid: fa02e4a8d535b724dacdd5322b2833fa, type: 3}
+  monsterPrefab: {fileID: 7491659348569867791, guid: 0521476809f7e834e8de683c871908fb, type: 3}
+  model: {fileID: 5589323704897576580, guid: 4209181dab1b74a4db96830a8433483b, type: 3}
   baseHP: 20
   hpModifier: 2
   maxHP: 20
   actualHP: 20
   speed: 0.6
+  width: 0.6
   moneyDrop: 4

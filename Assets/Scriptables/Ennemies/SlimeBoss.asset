@@ -14,10 +14,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 5
   ennemyName: BlobBoss
-  prefab: {fileID: 3894212157298898784, guid: bb03a91ce5e0ee943bd77176e6daff77, type: 3}
+  monsterPrefab: {fileID: 7491659348569867791, guid: 0521476809f7e834e8de683c871908fb, type: 3}
+  model: {fileID: 2358289073133629877, guid: 55ae76cbd774a2a47b01db7c193c2937, type: 3}
   baseHP: 150
   hpModifier: 0
   maxHP: 150
   actualHP: 150
   speed: 0.6
+  width: 1
   moneyDrop: 20

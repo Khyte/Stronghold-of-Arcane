@@ -14,10 +14,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 0
   ennemyName: Slime
-  prefab: {fileID: 2758694770740429211, guid: 23d47ae23050f7d49b4fa295a7ee51b1, type: 3}
+  monsterPrefab: {fileID: 7491659348569867791, guid: 0521476809f7e834e8de683c871908fb, type: 3}
+  model: {fileID: 4007744503470813090, guid: 964af7d28d00b92488500a4260ae23f8, type: 3}
   baseHP: 10
   hpModifier: 1
   maxHP: 10
   actualHP: 10
   speed: 0.8
+  width: 0.6
   moneyDrop: 2

@@ -14,10 +14,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 4
   ennemyName: BlobFire
-  prefab: {fileID: 4230524998222966107, guid: cbfba6ca70df24e4ca6e7bb1db57edb0, type: 3}
+  monsterPrefab: {fileID: 7491659348569867791, guid: 0521476809f7e834e8de683c871908fb, type: 3}
+  model: {fileID: 8027763299561123235, guid: 5ab1041f609ddcc46b75acbb8045c0e9, type: 3}
   baseHP: 18
   hpModifier: 2
   maxHP: 18
   actualHP: 18
   speed: 1.2
+  width: 0.6
   moneyDrop: 6

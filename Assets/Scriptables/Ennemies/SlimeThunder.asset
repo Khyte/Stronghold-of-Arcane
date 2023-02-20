@@ -14,10 +14,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 1
   ennemyName: BlobThunder
-  prefab: {fileID: 3497221510951082384, guid: 0f1857c45ee4a784581aab570b3f4088, type: 3}
+  monsterPrefab: {fileID: 7491659348569867791, guid: 0521476809f7e834e8de683c871908fb, type: 3}
+  model: {fileID: 7352303168324301350, guid: 1f3eba77be212bb4694e6d0e8f376c2e, type: 3}
   baseHP: 12
   hpModifier: 1
   maxHP: 12
   actualHP: 12
   speed: 1.5
+  width: 0.6
   moneyDrop: 3

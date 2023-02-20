@@ -14,10 +14,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 3
   ennemyName: BlobWind
-  prefab: {fileID: 1662886686490205298, guid: 14e360e11fec5ff42aa7f59a05b09e2d, type: 3}
+  monsterPrefab: {fileID: 7491659348569867791, guid: 0521476809f7e834e8de683c871908fb, type: 3}
+  model: {fileID: 4652646812956733227, guid: 9b100f22e70fd0d4d94666a89d32b3bb, type: 3}
   baseHP: 14
   hpModifier: 1
   maxHP: 14
   actualHP: 14
   speed: 2
+  width: 0.6
   moneyDrop: 5

@@ -165,21 +165,12 @@ public class Towers : MonoBehaviour
 				availableTargets.RemoveAt(i);
 			else
 			{
-				for (int j = 0 ; j < GameController.Instance.ends.Count ; j++)
+				float distance = availableTargets[i].GetDistanceFromEnd();
+
+				if (distanceToEnd > distance)
 				{
-					float distance = 0;
-					Vector3[] points = availableTargets[i].agent.path.corners;
-
-					for (int k = 0 ; k < points.Length - 1 ; k++)
-					{
-						distance += Vector3.Distance(points[k], points[k + 1]);
-					}
-
-					if (distanceToEnd > distance)
-					{
-						distanceToEnd = distance;
-						potentialTarget = availableTargets[i];
-					}
+					distanceToEnd = distance;
+					potentialTarget = availableTargets[i];
 				}
 			}
 		}

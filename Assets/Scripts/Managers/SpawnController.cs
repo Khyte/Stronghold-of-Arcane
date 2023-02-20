@@ -24,13 +24,6 @@ public class SpawnController : MonoBehaviour
 		source.clip = spawnSound;
 	}
 
-	private void InitializeEnnemy(Ennemies ennemy, EnnemiesData data)
-	{
-		ennemy.data = data;
-		ennemy.name = data.name;
-		ennemy.InitializeEnnemy();
-	}
-
 	public void StartNewWave()
 	{
 		PlaySpawnSound();
@@ -99,15 +92,14 @@ public class SpawnController : MonoBehaviour
 
 		if (ennemy == null)
 		{
-			GameObject newEnnemy = Instantiate(waveEnnemies[choice].prefab);
+			GameObject newEnnemy = Instantiate(waveEnnemies[choice].monsterPrefab);
 			ennemy = newEnnemy.GetComponent<Ennemies>();
 			ennemy.gameObject.SetActive(false);
 			ennemiesPool.Add(ennemy);
 		}
 
 		ennemy.OnEnnemyDie += CheckVictory;
-
-		InitializeEnnemy(ennemy, waveEnnemies[choice]);
+		ennemy.InitializeEnnemy(waveEnnemies[choice]);
 
 		int selectSpawn = Random.Range(0, GameController.Instance.spawns.Count);
 		int selectEnd = Random.Range(0, GameController.Instance.ends.Count);
@@ -117,7 +109,6 @@ public class SpawnController : MonoBehaviour
 		ennemy.transform.LookAt(GameController.Instance.ends[selectEnd].position);
 		ennemy.gameObject.SetActive(true);
 		ennemy.SetTarget(GameController.Instance.ends[selectEnd].position + GameController.Instance.ends[selectEnd].right * (-randomPos));
-		ennemy.agent.speed = ennemy.data.speed;
 
 		waveEnnemies.RemoveAt(choice);
 
