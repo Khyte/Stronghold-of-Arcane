@@ -17,11 +17,12 @@ MonoBehaviour:
   prefab: {fileID: 2683329161875861639, guid: 0e606f1741cf7cf42a5b4dbdfcd6fec9, type: 3}
   projectile: {fileID: 4241223404537191788, guid: 585728948781a574ca141c28b18f0ff0, type: 3}
   dotParticles: {fileID: 2249873826770054362, guid: 2531215e8fe37af48b1e3629eec47e3e, type: 3}
+  emissiveColor: {r: 1, g: 0.7194255, b: 0, a: 1}
   towerModels:
-  - {fileID: 2244117154019629208, guid: 9d74bedfaabfaba4a9fca12f199f21a4, type: 3}
-  - {fileID: 1207014519152343164, guid: 6cef57b1bc9b70a4ba833da556af687e, type: 3}
-  - {fileID: 6740109565429070540, guid: 9f174fc2f0f0e5946b8445f705abd878, type: 3}
-  - {fileID: 235749898940866416, guid: 65a6857b4a46d8046b89bf21f5d3dc30, type: 3}
+  - {fileID: 9123325961749788087, guid: 93d500162b5d60340908b149468f5a80, type: 3}
+  - {fileID: 833482349834237696, guid: 46d41d99696a5814eb5b39c7c53dd77b, type: 3}
+  - {fileID: 8575408273569247431, guid: 45621308e54889147be3fbbf3c477df6, type: 3}
+  - {fileID: 7025160471134804434, guid: 63f82e009559107489f98c1e4ebcf8ca, type: 3}
   baseAttack: 1
   attackModifier: 0.5
   attackSpeed: 0.5

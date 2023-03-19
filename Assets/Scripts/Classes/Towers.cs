@@ -26,6 +26,8 @@ public class Towers : MonoBehaviour
 	private GameObject dotParticles;
 	private bool isShooting;
 
+	private MaterialPropertyBlock mpb;
+
 	private void Start()
 	{
 		if (dotParticles != null)
@@ -36,10 +38,17 @@ public class Towers : MonoBehaviour
 	{
 		listOfModels = new List<GameObject>();
 
+		mpb = new MaterialPropertyBlock();
+
 		for (int i = 0 ; i < data.towerModels.Count ; i++)
 		{
 			GameObject tower = Instantiate(data.towerModels[i], modelsParent);
 			listOfModels.Add(tower);
+
+			MeshRenderer mesh = tower.GetComponentInChildren<MeshRenderer>();
+			mesh.GetPropertyBlock(mpb);
+			mpb.SetColor("_EmissionColor", data.emissiveColor);
+			mesh.SetPropertyBlock(mpb);
 
 			if (i == 0)
 				tower.SetActive(true);

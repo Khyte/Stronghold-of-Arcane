@@ -9,7 +9,9 @@ public class TowersData : ScriptableObject
 	public string towerName;
 	public GameObject prefab;
 	public Projectiles projectile;
-	public GameObject dotParticles;	
+	public GameObject dotParticles;
+
+	public Color emissiveColor;
 
 	public List<GameObject> towerModels;
 
